@@ -83,10 +83,12 @@ const RestLogin = (props, { ...others }) => {
               onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
                   try {
                     Axios
-                          .post( `${API_URL}/login/`, {
+                          .post( `${API_URL}/login/`,
+                           {
                               password: values.password,
                               email: values.email
                           },
+                          
                           )
                           .then(function (response) {
                               if (response.data.success) {
