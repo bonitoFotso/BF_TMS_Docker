@@ -26,6 +26,15 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 # .env.
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    #"http://192.168.44.42:3000",
+    "http://localhost:8080",
+    "http://127.0.0.1:8080",
+
+    "http://dev-nginx:8080",  # Ajoutez l'adresse de votre service nginx dans Docker Compose
+]
 
 # Application definition
 
@@ -132,8 +141,6 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = "core.User"
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -155,7 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = "fr-fr"
+LANGUAGE_CODE = "fr"
 
 TIME_ZONE = "UTC"
 
@@ -182,8 +189,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 PASSWORD_RESET_TIMEOUT=900          # 900 Sec = 15 Min
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    'http://192.168.44.42:3000'
-]
