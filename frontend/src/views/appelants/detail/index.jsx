@@ -3,6 +3,7 @@ import axios from 'axios';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useParams } from 'react-router-dom';
+import API_URL from 'conf';
 
 const AppelantDetail = () => {
   const { id } = useParams();

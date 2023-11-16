@@ -69,7 +69,7 @@ const ProfileSection = () => {
           },
         })
         .then(function (response) {
-            consol.log('log out');
+            console.log('log out');
             // Force the LOGOUT
             //if (response.data.success) {
                 dispatcher({ type: LOGOUT });

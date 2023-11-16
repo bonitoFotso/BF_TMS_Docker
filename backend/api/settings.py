@@ -29,11 +29,14 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    #"http://192.168.44.42:3000",
+    "http://172.21.0.5:8080",
     "http://localhost:8080",
     "http://127.0.0.1:8080",
-
-    "http://dev-nginx:8080",  # Ajoutez l'adresse de votre service nginx dans Docker Compose
+    #"*",
+    "http://dev-nginx:8080",
+    "http://192.168.44.47:8000",  # Ajoutez l'adresse de votre service nginx dans Docker Compose
+    "http://192.168.44.47:8080",
+    "http://192.168.44.47:3000"
 ]
 
 # Application definition
