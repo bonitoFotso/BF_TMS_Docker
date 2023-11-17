@@ -21,7 +21,7 @@ python manage.py makemigrations
 python manage.py migrate
 
 # Create superuser
-#python manage.py createsuperuser --noinput --email=$DJANGO_ADMIN_EMAIL --password=$DJANGO_ADMIN_PASSWORD
+python manage.py createsuperuser --noinput --email=$DJANGO_ADMIN_EMAIL --password=$DJANGO_ADMIN_PASSWORD
 
 python manage.py collectstatic --noinput
 

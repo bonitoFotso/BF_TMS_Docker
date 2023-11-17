@@ -14,8 +14,8 @@ services:
       - ./backend/db.sqlite3:/srv/app/db.sqlite3  # Ajout du volume pour la base de données SQLite
       - static:/srv/app/static
       - media:/srv/app/media
-    depends_on:
-      - db
+    #depends_on:
+    #  - db
     networks:
       - backend-network
 
@@ -38,16 +38,16 @@ services:
     networks:
       - backend-network
 
-  db:
-    image: postgres:15.2-alpine
-    container_name: dev-db
-    ports:
-      - "5432:5432"
-    env_file: ./.env.dev
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - backend-network
+  #db:
+  #  image: postgres:15.2-alpine
+  #  container_name: dev-db
+  #  ports:
+  #    - "5432:5432"
+  #  env_file: ./.env.dev
+  #  volumes:
+  #    - postgres_data:/var/lib/postgresql/data
+  #  networks:
+  #    - backend-network
 
   nginx:
     build: ./nginx
@@ -61,7 +61,7 @@ services:
     depends_on:
       - django
       - react
-      - db
+      #- db
     networks:
       - backend-network
 
@@ -70,6 +70,6 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+#  postgres_data:
   media:
   static:
