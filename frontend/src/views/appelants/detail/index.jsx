@@ -20,7 +20,7 @@ const AppelantDetail = () => {
         setAppelant(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Erreur lors de la récupération des détails de l\'appelant :', error);
+        console.error("Erreur lors de la récupération des détails de l'appelant :", error);
         setError(error);
         setLoading(false);
       }
@@ -40,7 +40,7 @@ const AppelantDetail = () => {
       setAppelant(response.data);
       setIsEditing(false);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'appelant :', error);
+      console.error("Erreur lors de la mise à jour de l'appelant :", error);
       // Gérer les erreurs de mise à jour de manière appropriée (par exemple, afficher un message d'erreur à l'utilisateur)
     }
   };
@@ -58,7 +58,7 @@ const AppelantDetail = () => {
       await axios.delete(`/api/appelants/${id}`); // Mettez l'URL correcte de votre API Django
       // Rediriger ou effectuer d'autres actions après la suppression
     } catch (error) {
-      console.error('Erreur lors de la suppression de l\'appelant :', error);
+      console.error("Erreur lors de la suppression de l'appelant :", error);
       // Gérer les erreurs de suppression de manière appropriée (par exemple, afficher un message d'erreur à l'utilisateur)
     }
   };
@@ -72,16 +72,15 @@ const AppelantDetail = () => {
   }
 
   if (!appelant) {
-    return <div>Aucun détail d'appelant trouvé.</div>;
+    return <div>Aucun détail d appelant trouvé.</div>;
   }
 
   return (
     <div>
-      <h2>Détails de l'Appelant</h2>
+      <h2>Détails de l Appelant</h2>
       {isEditing ? (
         <div>
           <TextField name="name" label="Nom de l'appelant" value={updatedAppelant.name} onChange={handleFieldChange} />
-          {/* Ajoutez d'autres champs ici */}
           <Button variant="contained" color="primary" onClick={handleSaveClick}>
             Enregistrer
           </Button>
@@ -91,7 +90,7 @@ const AppelantDetail = () => {
         </div>
       ) : (
         <div>
-          <p>Nom de l'appelant : {appelant.name}</p>
+          <p>Nom de l appelant : {appelant.name}</p>
           {/* Affichez d'autres champs ici */}
           <Button variant="contained" color="primary" onClick={handleEditClick}>
             Éditer

@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
-import API_URL from '../../../conf';
 
 const DataGridComponent = ({ tache }) => {
-  const renderActivite = (params) => (
-    <span>{params.row.activite.map((act) => act.nom).join(', ')}</span>
-  );
+  const renderActivite = (params) => <span>{params.row.activite.map((act) => act.nom).join(', ')}</span>;
 
-  const renderCategorie = (params) => (
-    <span>{params.row.categorie.map((cat) => cat.nom).join(', ')}</span>
-  );
+  const renderCategorie = (params) => <span>{params.row.categorie.map((cat) => cat.nom).join(', ')}</span>;
 
-  const renderAppelant = (params) => (
-    <span>{params.row.appelant.name}</span>
-  );
+  const renderAppelant = (params) => <span>{params.row.appelant.name}</span>;
 
   const columns = [
     { field: 'id', headerName: 'ID', flex: 1 },
@@ -26,20 +18,20 @@ const DataGridComponent = ({ tache }) => {
       field: 'activite',
       headerName: 'Activité',
       flex: 2,
-      renderCell: renderActivite,
+      renderCell: renderActivite
     },
     {
       field: 'categorie',
       headerName: 'Catégorie',
       flex: 2,
-      renderCell: renderCategorie,
+      renderCell: renderCategorie
     },
     {
       field: 'appelant',
       headerName: 'Appelant',
       flex: 2,
-      renderCell: renderAppelant,
-    },
+      renderCell: renderAppelant
+    }
   ];
 
   return (
@@ -47,6 +39,10 @@ const DataGridComponent = ({ tache }) => {
       <DataGrid rows={tache} columns={columns} pageSize={10} />
     </div>
   );
+};
+
+DataGridComponent.propTypes = {
+  tache: PropTypes.any
 };
 
 export default DataGridComponent;

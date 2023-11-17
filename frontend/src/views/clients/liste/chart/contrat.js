@@ -11,17 +11,17 @@ const ContractChart = ({ contractedClients, nonContractedClients }) => {
         type: 'donut',
         height: '100%', // Ajuste la hauteur du donut à 100%
         toolbar: {
-          show: true,
+          show: true
         },
         plotOptions: {
           pie: {
-            size: '80%', // Ajuste la taille du donut
-          },
-        },
+            size: '80%' // Ajuste la taille du donut
+          }
+        }
       },
       legend: {
-        position: 'bottom', // Positionne la légende en dessous du graphique
-      },
+        position: 'bottom' // Positionne la légende en dessous du graphique
+      }
     };
 
     const emptyChartOptions = {
@@ -30,41 +30,22 @@ const ContractChart = ({ contractedClients, nonContractedClients }) => {
         type: 'donut',
         height: '100%',
         toolbar: {
-          show: false,
+          show: false
         },
         plotOptions: {
           pie: {
-            size: '80%',
-          },
-        },
+            size: '80%'
+          }
+        }
       },
       legend: {
-        position: 'bottom',
-      },
+        position: 'bottom'
+      }
     };
-
-    const getChartOptions = (labels) => ({
-      labels: [labels],
-      chart: {
-        type: 'donut',
-        height: '100%',
-        toolbar: {
-          show: false,
-        },
-        plotOptions: {
-          pie: {
-            size: '80%',
-          },
-        },
-      },
-      legend: {
-        position: 'bottom',
-      },
-    });
 
     const chartStyle = {
       width: '100%',
-      height: '100%',
+      height: '100%'
     };
 
     return (
@@ -78,12 +59,12 @@ const ContractChart = ({ contractedClients, nonContractedClients }) => {
       </div>
     );
   } catch (error) {
-    console.error("Erreur dans ContractChart :", error.message);
+    console.error('Erreur dans ContractChart :', error.message);
 
     return (
       <div>
         <h2>Erreur</h2>
-        <p>Une erreur s'est produite lors de l'affichage du graphique.</p>
+        <p>Une erreur s est produite lors de l affichage du graphique.</p>
       </div>
     );
   }

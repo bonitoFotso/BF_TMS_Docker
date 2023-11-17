@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Avatar, Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Avatar, Box, Card, Grid, Typography } from '@mui/material';
 
 export default function Banner(props) {
   const { banner, avatar, name, job, posts, followers, following } = props;
@@ -12,7 +13,7 @@ export default function Banner(props) {
           backgroundSize: 'cover',
           borderRadius: '16px',
           height: '101px',
-          width: '100%',
+          width: '100%'
         }}
       />
       <Avatar
@@ -54,3 +55,13 @@ export default function Banner(props) {
     </Card>
   );
 }
+
+Banner.propTypes = {
+  avatar: PropTypes.any,
+  banner: PropTypes.any,
+  followers: PropTypes.any,
+  following: PropTypes.any,
+  job: PropTypes.any,
+  name: PropTypes.any,
+  posts: PropTypes.any
+};

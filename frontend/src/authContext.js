@@ -1,5 +1,6 @@
 // AuthContext.js
 
+import PropTypes from 'prop-types';
 import API_URL from 'conf';
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -26,46 +27,42 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setIsAuthenticated(false);
     setUserData(null);
-  }; 
+  };
 
   const updateToken = useCallback(async () => {
-    console.log("Refresh token");
-    const r = localStorage.getItem("authToken");
+    console.log('Refresh token');
     const requestData = {
       //refresh: authToken,
-      refresh: authToken,
-      
+      refresh: authToken
     };
     console.log(requestData);
     try {
-        const response = await fetch(`${API_URL}/refresh/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(requestData),
+      const response = await fetch(`${API_URL}/refresh/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        //setAuthToken(data);
+        //setCurrentUser(jwt_decode(data.access));
+        localStorage.setItem('authToken', JSON.stringify(data.refresh));
+        dispatcher({
+          type: REFRESH,
+          payload: { token: data.access, refresh: data.refresh }
         });
-
-        if (response.status === 200) {
-            const data = await response.json();
-            //setAuthToken(data);
-            //setCurrentUser(jwt_decode(data.access));
-            localStorage.setItem("authToken", JSON.stringify(data.refresh));
-            dispatcher({
-              type: REFRESH,
-              payload: { token: data.access, refresh: data.refresh }
-          });
-        } else {
-            console.error("Erreur de serveur :", response.status, response.statusText);
-            //logoutUser();
-        }
+      } else {
+        console.error('Erreur de serveur :', response.status, response.statusText);
+        //logoutUser();
+      }
     } catch (error) {
-        console.error("Erreur de réseau :", error);
-        // Gérez l'erreur de réseau ici
+      console.error('Erreur de réseau :', error);
+      // Gérez l'erreur de réseau ici
     }
-}, [authToken, isLoading]);
-
-
+  }, [authToken, dispatcher]);
 
   useEffect(() => {
     if (isLoading) {
@@ -73,20 +70,18 @@ export const AuthProvider = ({ children }) => {
       console.log(authToken);
     }
 
-    const fourMinutes = 120 * 1000      
+    const fourMinutes = 120 * 1000;
     let interval = setInterval(() => {
       if (authToken) {
-        updateToken()
+        updateToken();
       }
-    }, fourMinutes)
-    return () => clearInterval(interval)
+    }, fourMinutes);
+    return () => clearInterval(interval);
+  });
 
-  },[authToken, isLoading, updateToken])
+  return <AuthContext.Provider value={{ isAuthenticated, userData, login, logout }}>{children}</AuthContext.Provider>;
+};
 
-
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, userData, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+AuthProvider.propTypes = {
+  children: PropTypes.any
 };

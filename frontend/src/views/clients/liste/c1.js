@@ -6,8 +6,6 @@ import { useTheme, styled } from '@mui/material/styles';
 import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
 
 // third-party
-import Chart from 'react-apexcharts';
-
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import SkeletonTotalOrderCard from 'ui-component/cards/Skeleton/EarningCard';
@@ -154,11 +152,11 @@ const C1 = ({ isLoading }) => {
                     </Grid>
                   </Grid>
                   <Grid item xs={6}>
-                  {timeValue ? (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$108</Typography>
-                        ) : (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$961</Typography>
-                        )}
+                    {timeValue ? (
+                      <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$108</Typography>
+                    ) : (
+                      <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$961</Typography>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>

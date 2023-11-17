@@ -1,4 +1,5 @@
 // DataGridComponent.js
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Modal } from 'antd';
@@ -21,8 +22,6 @@ const DataGridComponent = ({ all }) => {
   };
 
   useEffect(() => {
-    
-
     fetchTaskData();
   }, []);
 
@@ -34,15 +33,14 @@ const DataGridComponent = ({ all }) => {
   const handleCloseModal = () => {
     setSelectedTask(null);
     setIsModalOpen(false);
-    console.log('close',selectedTask);
+    console.log('close', selectedTask);
   };
 
   const onSubmit = () => {
     fetchTaskData();
     handleCloseModal();
     setSelectedTask(null);
-    console.log('submit',selectedTask);
-
+    console.log('submit', selectedTask);
   };
 
   return (
@@ -53,6 +51,10 @@ const DataGridComponent = ({ all }) => {
       </Modal>
     </div>
   );
+};
+
+DataGridComponent.propTypes = {
+  all: PropTypes.any
 };
 
 export default DataGridComponent;

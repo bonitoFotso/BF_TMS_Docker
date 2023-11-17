@@ -8,7 +8,6 @@ import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import AuthLogin from '../auth-forms/AuthLogin';
-import Logo from 'ui-component/Logo';
 import AuthFooter from 'ui-component/cards/AuthFooter';
 
 // assets
@@ -28,9 +27,7 @@ const Login = () => {
               <AuthCardWrapper>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
-                    <Link to="#">
-                      
-                    </Link>
+                    <Link to="#"></Link>
                   </Grid>
                   <Grid item xs={12}>
                     <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
@@ -52,7 +49,6 @@ const Login = () => {
                   <Grid item xs={12}>
                     <Divider />
                   </Grid>
-                 
                 </Grid>
               </AuthCardWrapper>
             </Grid>

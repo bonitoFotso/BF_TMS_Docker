@@ -20,7 +20,7 @@ const ActiviteDetail = () => {
         setActivite(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Erreur lors de la récupération des détails de l\'activité :', error);
+        console.error("Erreur lors de la récupération des détails de l'activité :", error);
         setError(error);
         setLoading(false);
       }
@@ -40,7 +40,7 @@ const ActiviteDetail = () => {
       setActivite(response.data);
       setIsEditing(false);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'activité :', error);
+      console.error("Erreur lors de la mise à jour de l'activité :", error);
     }
   };
 
@@ -61,16 +61,21 @@ const ActiviteDetail = () => {
   }
 
   if (!activite) {
-    return <div>Aucun détail d'activité trouvé.</div>;
+    return <div>Aucun détail d activité trouvé.</div>;
   }
 
   return (
     <div>
-      <h2>Détails de l'Activité</h2>
+      <h2>Détails de l Activité</h2>
       {isEditing ? (
         <div>
           <TextField name="nom" label="Nom de l'activité" value={updatedActivite.nom} onChange={handleFieldChange} />
-          <TextField name="description" label="Description de l'activité" value={updatedActivite.description} onChange={handleFieldChange} />
+          <TextField
+            name="description"
+            label="Description de l'activité"
+            value={updatedActivite.description}
+            onChange={handleFieldChange}
+          />
           <Button variant="contained" color="primary" onClick={handleSaveClick}>
             Enregistrer
           </Button>
@@ -80,8 +85,8 @@ const ActiviteDetail = () => {
         </div>
       ) : (
         <div>
-          <p>Nom de l'activité : {activite.nom}</p>
-          <p>Description de l'activité : {activite.description}</p>
+          <p>Nom de l activité : {activite.nom}</p>
+          <p>Description de l activité : {activite.description}</p>
           <Button variant="contained" color="primary" onClick={handleEditClick}>
             Éditer
           </Button>

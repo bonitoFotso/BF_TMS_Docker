@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import API_URL from 'conf'
+import API_URL from 'conf';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import {
@@ -34,7 +34,6 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
-import UpgradePlanCard from './UpgradePlanCard';
 import User1 from 'assets/images/users/user-round.svg';
 import { LOGOUT } from 'store/actions';
 
@@ -49,7 +48,6 @@ const ProfileSection = () => {
   const navigate = useNavigate();
   const account = useSelector((state) => state.account);
   const dispatcher = useDispatch();
-  const user = useSelector((state) => state.account.user);
 
   const [sdm, setSdm] = useState(true);
   const [value, setValue] = useState('');
@@ -62,26 +60,29 @@ const ProfileSection = () => {
   const anchorRef = useRef(null);
   const handleLogout = () => {
     console.log(account.token);
-    Axios
-        .post( API_URL + '/logout/', {token: `${account.token}`}, {
-          headers: {
-            Authorization: 'Bearer ' + account.token // Assurez-vous d'inclure l'espace après "Bearer"
-          },
-        })
-        .then(function (response) {
-            console.log('log out');
-            // Force the LOGOUT
-            //if (response.data.success) {
-                dispatcher({ type: LOGOUT });
-            //} else {
-            //    console.log('response - ', response.data.msg);
-            //}
-        })
-        .catch(function (error) {
-            console.log('error - ', error);
-            dispatcher({ type: LOGOUT });
-        });
-};
+    Axios.post(
+      API_URL + '/logout/',
+      { token: `${account.token}` },
+      {
+        headers: {
+          Authorization: 'Bearer ' + account.token // Assurez-vous d'inclure l'espace après "Bearer"
+        }
+      }
+    )
+      .then(function (response) {
+        console.log('log out', response);
+        // Force the LOGOUT
+        //if (response.data.success) {
+        dispatcher({ type: LOGOUT });
+        //} else {
+        //    console.log('response - ', response.data.msg);
+        //}
+      })
+      .catch(function (error) {
+        console.log('error - ', error);
+        dispatcher({ type: LOGOUT });
+      });
+  };
 
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {

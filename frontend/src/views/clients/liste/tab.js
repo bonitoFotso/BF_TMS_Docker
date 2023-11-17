@@ -14,7 +14,7 @@ const Tab_client = () => {
   const token = useSelector((state) => state.account.token);
 
   const [clients, setClients] = useState([]);
-  const [t, setT] = useState();
+  const [t] = useState();
   const [newClient, setNewClient] = useState({
     name: '',
     responsable: '',
@@ -23,7 +23,7 @@ const Tab_client = () => {
     address: '',
     city: '',
     n_client: '',
-    maintenance: false,
+    maintenance: false
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -40,7 +40,7 @@ const Tab_client = () => {
       try {
         const response = await axios.get(`${API_URL}/clients/`, {
           headers: {
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         });
 
@@ -53,8 +53,8 @@ const Tab_client = () => {
         }
       } catch (error) {
         console.error('Erreur lors de la récupération des clients :');
-        console.log(token)
-        setError('Une erreur s\'est produite lors de la récupération des clients.');
+        console.log(token);
+        setError("Une erreur s'est produite lors de la récupération des clients.");
         setLoading(false);
       }
     };
@@ -67,21 +67,17 @@ const Tab_client = () => {
     const inputValue = type === 'checkbox' ? checked : value;
     setNewClient({
       ...newClient,
-      [name]: inputValue,
+      [name]: inputValue
     });
   };
 
   const handleCreateClient = async () => {
     try {
-      const response = await axios.post(
-        `${API_URL}/clients/`,
-        newClient,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
+      const response = await axios.post(`${API_URL}/clients/`, newClient, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      );
+      });
       if (response.status === 201) {
         setClients([...clients, response.data]);
         setNewClient({
@@ -92,7 +88,7 @@ const Tab_client = () => {
           address: '',
           city: '',
           n_client: '',
-          maintenance: false,
+          maintenance: false
         });
         handleCloseModal(); // Fermer le modal après la création
       } else {
@@ -112,10 +108,7 @@ const Tab_client = () => {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100,
-      renderCell: (params) => (
-        <Link to={`/client/${params.value}`}>{params.value}</Link>
-      )},
+    { field: 'id', headerName: 'ID', width: 100, renderCell: (params) => <Link to={`/client/${params.value}`}>{params.value}</Link> },
     { field: 'name', headerName: 'Nom du client', flex: 1 },
     { field: 'responsable', headerName: 'Responsable', flex: 1 },
     { field: 'email', headerName: 'Email', flex: 1 },
@@ -127,10 +120,9 @@ const Tab_client = () => {
       field: 'maintenance',
       headerName: 'Sous contrat de maintenance',
       flex: 1,
-      type: 'boolean',
-    },
+      type: 'boolean'
+    }
   ];
-  
 
   return (
     <>
@@ -176,12 +168,7 @@ const Tab_client = () => {
                 <>
                   <h2>Liste des Clients</h2>
                   <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid
-                      rows={clients}
-                      columns={columns}
-                      pageSize={10}
-                      rowsPerPageOptions={[10, 25, 50]}
-                    />
+                    <DataGrid rows={clients} columns={columns} pageSize={10} rowsPerPageOptions={[10, 25, 50]} />
                   </div>
                 </>
               ) : (
@@ -198,59 +185,30 @@ const Tab_client = () => {
                       aria-labelledby="modal-modal-title"
                       aria-describedby="modal-modal-description"
                     >
-                      <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          width: 400,
+                          bgcolor: 'background.paper',
+                          boxShadow: 24,
+                          p: 4
+                        }}
+                      >
                         <h2 id="modal-modal-title">Créer un Client</h2>
                         <div>
-                          <TextField
-                            name="name"
-                            label="Nom du client"
-                            value={newClient.name}
-                            onChange={handleInputChange}
-                          />
-                          <TextField
-                            name="responsable"
-                            label="Responsable"
-                            value={newClient.responsable}
-                            onChange={handleInputChange}
-                          />
-                          <TextField
-                            name="email"
-                            label="Email"
-                            value={newClient.email}
-                            onChange={handleInputChange}
-                          />
-                          <TextField
-                            name="phone"
-                            label="Téléphone"
-                            value={newClient.phone}
-                            onChange={handleInputChange}
-                          />
-                          <TextField
-                            name="address"
-                            label="Adresse"
-                            value={newClient.address}
-                            onChange={handleInputChange}
-                          />
-                          <TextField
-                            name="city"
-                            label="Ville"
-                            value={newClient.city}
-                            onChange={handleInputChange}
-                          />
-                          <TextField
-                            name="n_client"
-                            label="Numéro de client"
-                            value={newClient.n_client}
-                            onChange={handleInputChange}
-                          />
+                          <TextField name="name" label="Nom du client" value={newClient.name} onChange={handleInputChange} />
+                          <TextField name="responsable" label="Responsable" value={newClient.responsable} onChange={handleInputChange} />
+                          <TextField name="email" label="Email" value={newClient.email} onChange={handleInputChange} />
+                          <TextField name="phone" label="Téléphone" value={newClient.phone} onChange={handleInputChange} />
+                          <TextField name="address" label="Adresse" value={newClient.address} onChange={handleInputChange} />
+                          <TextField name="city" label="Ville" value={newClient.city} onChange={handleInputChange} />
+                          <TextField name="n_client" label="Numéro de client" value={newClient.n_client} onChange={handleInputChange} />
                           <label>
                             Sous contrat de maintenance:{' '}
-                            <input
-                              type="checkbox"
-                              name="maintenance"
-                              checked={newClient.maintenance}
-                              onChange={handleInputChange}
-                            />
+                            <input type="checkbox" name="maintenance" checked={newClient.maintenance} onChange={handleInputChange} />
                           </label>
                           <Button variant="contained" color="primary" onClick={handleCreateClient}>
                             Créer

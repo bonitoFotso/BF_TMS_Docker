@@ -1,30 +1,25 @@
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import Axios from 'axios';
 import API_URL from '../../../../conf';
-import { useNavigate, Link } from "react-router-dom";
-import { loginSuccess } from './action'
-import { useAuth } from 'authContext'; // Importez le hook useAuth
+import { useNavigate, Link } from 'react-router-dom';
+
 import React from 'react';
 
 // material-ui
-import { useTheme, makeStyles } from '@mui/material/styles';
 import {
   Box,
   Button,
   Checkbox,
-  Divider,
   FormControl,
   FormControlLabel,
   FormHelperText,
-  Grid,
   IconButton,
   InputAdornment,
   InputLabel,
   OutlinedInput,
   Stack,
-  Typography,
-  useMediaQuery
+  Typography
 } from '@mui/material';
 
 // third party
@@ -39,9 +34,7 @@ import AnimateButton from 'ui-component/extended/AnimateButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Google from 'assets/images/icons/social-google.svg';
 import { ACCOUNT_INITIALIZE } from 'store/actions';
-
 
 //============================|| API JWT - LOGIN ||============================//
 
@@ -50,17 +43,15 @@ const RestLogin = (props, { ...others }) => {
 
   const scriptedRef = useScriptRef();
   const [checked, setChecked] = React.useState(true);
-  const account = useSelector((state) => state.account);
-  const user = useSelector((state) => state.account.user);
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
-      setShowPassword(!showPassword);
+    setShowPassword(!showPassword);
   };
 
   const handleMouseDownPassword = (event) => {
-      event.preventDefault();
+    event.preventDefault();
   };
 
   function storeTokens(token, refresh) {
@@ -69,178 +60,165 @@ const RestLogin = (props, { ...others }) => {
   }
 
   return (
-      <React.Fragment>
-          <Formik
-              initialValues={{
-                  email: '',
-                  password: '',
-                  submit: null
-              }}
-              validationSchema={Yup.object().shape({
-                  email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                  password: Yup.string().max(255).required('Password is required')
-              })}
-              onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
-                  try {
-                    Axios
-                          .post( `${API_URL}/login/`,
-                           {
-                              password: values.password,
-                              email: values.email
-                          },
-                          /*{
+    <React.Fragment>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+          submit: null
+        }}
+        validationSchema={Yup.object().shape({
+          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
+          password: Yup.string().max(255).required('Password is required')
+        })}
+        onSubmit={(values, { setErrors, setStatus, setSubmitting }) => {
+          try {
+            Axios.post(
+              `${API_URL}/login/`,
+              {
+                password: values.password,
+                email: values.email
+              }
+              /*{
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Access-Control-Allow-Origin': 'http://192.168.44.41:8000',  // Ajoutez l'origine de votre application React
                               }
                           }*/
-                          
-                          )
-                          .then(function (response) {
-                              if (response.data.success) {
-                                  
-                                  storeTokens(response.data.token,response.data.refresh);
-                                  dispatcher({
-                                      type: ACCOUNT_INITIALIZE,
-                                      payload: { isLoggedIn: true, user: response.data.user, token: response.data.token, refresh: response.data.refresh }
-                                  });
-                                  navigate('/');
+            )
+              .then(function (response) {
+                if (response.data.success) {
+                  storeTokens(response.data.token, response.data.refresh);
+                  dispatcher({
+                    type: ACCOUNT_INITIALIZE,
+                    payload: { isLoggedIn: true, user: response.data.user, token: response.data.token, refresh: response.data.refresh }
+                  });
+                  navigate('/');
 
-                                  if (scriptedRef.current) {
-                                      setStatus({ success: true });
-                                      setSubmitting(false);
-                                     
-                                  }
-                              } else {
-                                  setStatus({ success: false });
-                                  setErrors({ submit: response.data.msg });
-                                  setSubmitting(false);
-                              }
-                          })
-                          .catch(function (error) {
-                              setStatus({ success: false });
-                              //setErrors({ submit: error.response.data.msg });
-                              setSubmitting(false);
-                          });
-                  } catch (err) {
-                      console.error(err);
-                      if (scriptedRef.current) {
-                          setStatus({ success: false });
-                          setErrors({ submit: err.message });
-                          setSubmitting(false);
-                      }
+                  if (scriptedRef.current) {
+                    setStatus({ success: true });
+                    setSubmitting(false);
                   }
-              }}
-          >
-              {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-                  <form noValidate onSubmit={handleSubmit} {...others}>
-                      <FormControl fullWidth error={Boolean(touched.email && errors.email)} >
-                          <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
-                          <OutlinedInput
-                              id="outlined-adornment-email-login"
-                              type="email"
-                              value={values.email}
-                              name="email"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              label="Email Address"
-                              
-                          />
-                          {touched.email && errors.email && (
-                              <FormHelperText error id="standard-weight-helper-text-email-login">
-                                  {' '}
-                                  {errors.email}{' '}
-                              </FormHelperText>
-                          )}
-                      </FormControl>
-
-                      <FormControl fullWidth error={Boolean(touched.password && errors.password)}>
-                          <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
-                          <OutlinedInput
-                              id="outlined-adornment-password-login"
-                              type={showPassword ? 'text' : 'password'}
-                              value={values.password}
-                              name="password"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              endAdornment={
-                                  <InputAdornment position="end">
-                                      <IconButton
-                                          aria-label="toggle password visibility"
-                                          onClick={handleClickShowPassword}
-                                          onMouseDown={handleMouseDownPassword}
-                                          edge="end"
-                                      >
-                                          {showPassword ? <Visibility /> : <VisibilityOff />}
-                                      </IconButton>
-                                  </InputAdornment>
-                              }
-                              label="Password"
-                              
-                          />
-                          {touched.password && errors.password && (
-                              <FormHelperText error id="standard-weight-helper-text-password-login">
-                                  {' '}
-                                  {errors.password}{' '}
-                              </FormHelperText>
-                          )}
-                      </FormControl>
-                      <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                          <FormControlLabel
-                              control={
-                                  <Checkbox
-                                      checked={checked}
-                                      onChange={(event) => setChecked(event.target.checked)}
-                                      name="checked"
-                                      color="primary"
-                                  />
-                              }
-                              label="Remember me"
-                          />
-                          <Typography
-                              variant="subtitle1"
-                              component={Link}
-                              to={props.login ? '/pages/forgot-password/forgot-password' + props.login : '#'}
-                              color="secondary"
-                              sx={{ textDecoration: 'none' }}
-                          >
-                              Forgot Password?
-                          </Typography>
-                      </Stack>
-                      {errors.submit && (
-                          <Box
-                              sx={{
-                                  mt: 3
-                              }}
-                          >
-                              <FormHelperText error>{errors.submit}</FormHelperText>
-                          </Box>
-                      )}
-
-                      <Box
-                          sx={{
-                              mt: 2
-                          }}
-                      >
-                          <AnimateButton>
-                              <Button
-                                  disableElevation
-                                  disabled={isSubmitting}
-                                  fullWidth
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  color="secondary"
-                              >
-                                  Sign IN
-                              </Button>
-                          </AnimateButton>
-                      </Box>
-                  </form>
+                } else {
+                  setStatus({ success: false });
+                  setErrors({ submit: response.data.msg });
+                  setSubmitting(false);
+                }
+              })
+              .catch(function (error) {
+                setStatus({ success: false });
+                console.log(error);
+                //setErrors({ submit: error.response.data.msg });
+                setSubmitting(false);
+              });
+          } catch (err) {
+            console.error(err);
+            if (scriptedRef.current) {
+              setStatus({ success: false });
+              setErrors({ submit: err.message });
+              setSubmitting(false);
+            }
+          }
+        }}
+      >
+        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+          <form noValidate onSubmit={handleSubmit} {...others}>
+            <FormControl fullWidth error={Boolean(touched.email && errors.email)}>
+              <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-email-login"
+                type="email"
+                value={values.email}
+                name="email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                label="Email Address"
+              />
+              {touched.email && errors.email && (
+                <FormHelperText error id="standard-weight-helper-text-email-login">
+                  {' '}
+                  {errors.email}{' '}
+                </FormHelperText>
               )}
-          </Formik>
-      </React.Fragment>
+            </FormControl>
+
+            <FormControl fullWidth error={Boolean(touched.password && errors.password)}>
+              <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-password-login"
+                type={showPassword ? 'text' : 'password'}
+                value={values.password}
+                name="password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="Password"
+              />
+              {touched.password && errors.password && (
+                <FormHelperText error id="standard-weight-helper-text-password-login">
+                  {' '}
+                  {errors.password}{' '}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={checked} onChange={(event) => setChecked(event.target.checked)} name="checked" color="primary" />
+                }
+                label="Remember me"
+              />
+              <Typography
+                variant="subtitle1"
+                component={Link}
+                to={props.login ? '/pages/forgot-password/forgot-password' + props.login : '#'}
+                color="secondary"
+                sx={{ textDecoration: 'none' }}
+              >
+                Forgot Password?
+              </Typography>
+            </Stack>
+            {errors.submit && (
+              <Box
+                sx={{
+                  mt: 3
+                }}
+              >
+                <FormHelperText error>{errors.submit}</FormHelperText>
+              </Box>
+            )}
+
+            <Box
+              sx={{
+                mt: 2
+              }}
+            >
+              <AnimateButton>
+                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                  Sign IN
+                </Button>
+              </AnimateButton>
+            </Box>
+          </form>
+        )}
+      </Formik>
+    </React.Fragment>
   );
+};
+
+RestLogin.propTypes = {
+  login: PropTypes.any
 };
 
 export default RestLogin;

@@ -5,7 +5,7 @@ const initialState = {
   username: '',
   user_type: '',
   access_token: '',
-  refresh_token: '',
+  refresh_token: ''
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,7 +18,7 @@ const authReducer = (state = initialState, action) => {
         username: action.payload.username,
         user_type: action.payload.user_type,
         access_token: action.payload.access_token,
-        refresh_token: action.payload.refresh_token,
+        refresh_token: action.payload.refresh_token
       };
     case 'LOGOUT':
       // Réinitialisez l'état de l'utilisateur à sa valeur initiale

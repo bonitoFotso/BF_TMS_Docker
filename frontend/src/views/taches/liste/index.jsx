@@ -33,7 +33,7 @@ const TacheList = () => {
       <h2>Liste des Tâches</h2>
       <CreerTache all={all} />
       <LoadingErrorComponent loading={loading} error={error} />
-      <DataGridComponent all={all}  />
+      <DataGridComponent all={all} />
     </Card>
   );
 };

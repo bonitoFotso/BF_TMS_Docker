@@ -19,17 +19,19 @@ const App = () => {
   const customization = useSelector((state) => state.customization);
 
   return (
-   // <Provider store={store}>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={themes(customization)}>
-          <CssBaseline />
-          <NavigationScroll>
-          <AuthProvider> {/* Enveloppez App avec le AuthProvider */}
+    // <Provider store={store}>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={themes(customization)}>
+        <CssBaseline />
+        <NavigationScroll>
+          <AuthProvider>
+            {' '}
+            {/* Enveloppez App avec le AuthProvider */}
             <Routes />
           </AuthProvider>
-          </NavigationScroll>
-        </ThemeProvider>
-      </StyledEngineProvider>
+        </NavigationScroll>
+      </ThemeProvider>
+    </StyledEngineProvider>
     //</Provider>
   );
 };

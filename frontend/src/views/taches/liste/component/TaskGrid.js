@@ -1,27 +1,28 @@
 // TaskGrid.js
+import PropTypes from 'prop-types';
 import React from 'react';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 
 const TaskGrid = ({ tasks, handleEditClick }) => {
   // ... (rest of the code for TaskGrid component)
   const renderActivite = (params) => (
-    <span>{params.row.activite.map((act) => (
+    <span>
+      {params.row.activite.map((act) => (
         <div key={act.id}>{act.nom}</div>
-      ))}</span>
+      ))}
+    </span>
   );
 
   const renderCategorie = (params) => (
-    <span>{params.row.categorie.map((cat) => (
+    <span>
+      {params.row.categorie.map((cat) => (
         <div key={cat.id}>{cat.nom}</div>
-      ))}</span>
+      ))}
+    </span>
   );
 
-  const renderAppelant = (params) => (
-    <span>{params.row.appelant.name}</span>
-  );
-  const rendertechnicien = (params) => (
-    <span>{params.row.assignations.map((tec) => tec.nom).join(', ')}</span>
-  );
+  const renderAppelant = (params) => <span>{params.row.appelant.name}</span>;
+  const rendertechnicien = (params) => <span>{params.row.assignations.map((tec) => tec.nom).join(', ')}</span>;
 
   const columns = [
     { field: 'id', headerName: 'ID', flex: 1 },
@@ -32,37 +33,40 @@ const TaskGrid = ({ tasks, handleEditClick }) => {
       field: 'activite',
       headerName: 'Activité',
       flex: 2,
-      renderCell: renderActivite,
+      renderCell: renderActivite
     },
     {
       field: 'categorie',
       headerName: 'Catégorie',
       flex: 2,
-      renderCell: renderCategorie,
+      renderCell: renderCategorie
     },
     {
       field: 'appelant',
       headerName: 'Appelant',
       flex: 2,
-      renderCell: renderAppelant,
+      renderCell: renderAppelant
     },
     {
-        field: 'assignations',
-        headerName: 'Techniciens',
-        flex: 2,
-        renderCell: rendertechnicien,
-      },
+      field: 'assignations',
+      headerName: 'Techniciens',
+      flex: 2,
+      renderCell: rendertechnicien
+    },
     {
       field: 'edit',
       headerName: 'Modifier',
       flex: 2,
-      renderCell: (params) => (
-        <button onClick={() => handleEditClick(params.row)}>Modifier</button>
-      ),
-    },
+      renderCell: (params) => <button onClick={() => handleEditClick(params.row)}>Modifier</button>
+    }
   ];
 
   return <DataGrid rows={tasks} columns={columns} pageSize={10} slots={{ toolbar: GridToolbar }} />;
+};
+
+TaskGrid.propTypes = {
+  handleEditClick: PropTypes.func,
+  tasks: PropTypes.any
 };
 
 export default TaskGrid;

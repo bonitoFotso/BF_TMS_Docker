@@ -147,9 +147,7 @@ const EarningCard = ({ isLoading }) => {
               <Grid item>
                 <Grid container alignItems="center">
                   <Grid item>
-                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                      
-                    </Typography>
+                    <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}></Typography>
                   </Grid>
                   <Grid item>
                     <Avatar
@@ -175,7 +173,6 @@ const EarningCard = ({ isLoading }) => {
                 >
                   SOLDE {user.email}
                 </Typography>
-
               </Grid>
               <Grid item sx={{ mb: 1.25 }}>
                 <Typography
@@ -187,12 +184,9 @@ const EarningCard = ({ isLoading }) => {
                 >
                   SOLDE {user.email}
                 </Typography>
-                
               </Grid>
-              
-              <Grid item>
-                {/* Intégrez le composant WalletList ici */}
-              </Grid>
+
+              <Grid item>{/* Intégrez le composant WalletList ici */}</Grid>
             </Grid>
           </Box>
         </CardWrapper>

@@ -1,11 +1,11 @@
 // EditTaskForm.js
+import PropTypes from 'prop-types';
 import React from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import API_URL from 'conf';
-import moment from 'moment';
 import 'moment/locale/fr'; // Ajoutez cette ligne si vous souhaitez utiliser la localisation française
 
 const { Option } = Select;
@@ -19,8 +19,6 @@ const TaskForm = ({ onSubmit, onCancel, all }) => {
     form
       .validateFields()
       .then((values) => {
-        
-
         axios
           .post(`${API_URL}/taches-c/`, values)
           .then((response) => {
@@ -38,89 +36,106 @@ const TaskForm = ({ onSubmit, onCancel, all }) => {
   };
 
   return (
-    <Form form={form} 
+    <Form form={form}>
+      {/* Inclure les champs de formulaire nécessaires pour la modification */}
+      <Form.Item label="Activité" name="activite" rules={[{ required: true, message: 'Veuillez sélectionner l activité!' }]}>
+        <Select mode="multiple" placeholder="Sélectionnez une ou plusieurs activités">
+          {all.activites.map((item) => (
+            <Option key={item.id} value={item.id}>
+              {item.nom}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item label="Catégorie" name="categorie" rules={[{ required: true, message: 'Veuillez sélectionner la Catégorie!' }]}>
+        <Select mode="multiple">
+          {all.categories.map((item) => (
+            <Option key={item.id} value={item.id}>
+              {item.nom}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+
+      <Form.Item label="Nom" name="nom" rules={[{ required: true, message: 'Veuillez saisir le nom!' }]}>
+        <Input />
+      </Form.Item>
+
+      <Form.Item label="Statut" name="status" rules={[{ required: true, message: 'Veuillez sélectionner le statut!' }]}>
+        <Select>
+          <Option value="En attente">En attente</Option>
+          <Option value="En cours">En cours</Option>
+          <Option value="En arrêt">En arrêt</Option>
+          <Option value="Effectué">Effectué</Option>
+        </Select>
+      </Form.Item>
+      <Form.Item label="Priorité" name="priorite" rules={[{ required: true, message: 'Veuillez sélectionner la priorité!' }]}>
+        <Select>
+          <Option value="Bas">Bas</Option>
+          <Option value="Moyen">Moyen</Option>
+          <Option value="Élevé">Élevé</Option>
+        </Select>
+      </Form.Item>
+      <Form.Item label="Appelant" name="appelant" rules={[{ required: true, message: 'Veuillez sélectionner l appelant!' }]}>
+        <Select>
+          {all.appelants.map((item) => (
+            <Option key={item.id} value={item.id}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.Item
+        label="Technicien"
+        name="assignations"
+        rules={[{ required: true, message: 'Veuillez sélectionner le ou les technicien(s)!' }]}
       >
-    {/* Inclure les champs de formulaire nécessaires pour la modification */}
-    <Form.Item
-  label="Activité"
-  name="activite"
-  rules={[{ required: true, message: 'Veuillez sélectionner l activité!' }]}
->
-  <Select mode="multiple" placeholder="Sélectionnez une ou plusieurs activités">
-    {all.activites.map((item) => (
-      <Option key={item.id} value={item.id}>
-        {item.nom}
-      </Option>
-    ))}
-  </Select>
-</Form.Item>
+        <Select mode="multiple">
+          {all.techniciens.map((tec) => (
+            <Option key={tec.id} value={tec.id}>
+              {tec.nom}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
 
-
-    <Form.Item label="Catégorie" name="categorie" rules={[{ required: true, message: 'Veuillez sélectionner la Catégorie!' }]}>
-  <Select mode="multiple">
-    {all.categories.map((item) => (
-      <Option key={item.id} value={item.id}>
-        {item.nom}
-      </Option>
-    ))}
-  </Select>
-</Form.Item>
-
-    <Form.Item label="Nom" name="nom" rules={[{ required: true, message: 'Veuillez saisir le nom!' }]}>
-      <Input />
-    </Form.Item>
-    
-    <Form.Item label="Statut" name="status" rules={[{ required: true, message: 'Veuillez sélectionner le statut!' }]}>
-      <Select>
-        <Option value="En attente">En attente</Option>
-        <Option value="En cours">En cours</Option>
-        <Option value="En arrêt">En arrêt</Option>
-        <Option value="Effectué">Effectué</Option>
-      </Select>
-    </Form.Item>
-    <Form.Item label="Priorité" name="priorite" rules={[{ required: true, message: 'Veuillez sélectionner la priorité!' }]}>
-      <Select>
-        <Option value="Bas">Bas</Option>
-        <Option value="Moyen">Moyen</Option>
-        <Option value="Élevé">Élevé</Option>
-      </Select>
-    </Form.Item>
-    <Form.Item label="Appelant" name="appelant" rules={[{ required: true, message: 'Veuillez sélectionner l appelant!' }]}>
-      <Select>
-        {all.appelants.map((item) => (
-          <Option key={item.id} value={item.id}>
-            {item.name}
-          </Option>
-        ))}
-      </Select>
-    </Form.Item>
-    <Form.Item label="Technicien" name="assignations" rules={[{ required: true, message: 'Veuillez sélectionner le ou les technicien(s)!' }]}>
-      <Select mode="multiple">
-        {all.techniciens.map((tec) => (
-          <Option key={tec.id} value={tec.id}>
-            {tec.nom}
-          </Option>
-        ))}
-      </Select>
-    </Form.Item>
-
-    <Form.Item label="Description" name="description">
-      <Input.TextArea />
-    </Form.Item>
-    <Form.Item label="Numéro d'OS" name="n_OS">
-      <Input />
-    </Form.Item>
-    <Form.Item label="Plage de dates" name="plage_dates">
-      <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-    </Form.Item>
-    <Form.Item>
-      <Button type="primary" onClick={handleSubmit}>
-        Enregistrer
-      </Button>
-      <Button onClick={onCancel}>Annuler</Button>
-    </Form.Item>
-  </Form>
+      <Form.Item label="Description" name="description">
+        <Input.TextArea />
+      </Form.Item>
+      <Form.Item label="Numéro d'OS" name="n_OS">
+        <Input />
+      </Form.Item>
+      <Form.Item label="Plage de dates" name="plage_dates">
+        <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" onClick={handleSubmit}>
+          Enregistrer
+        </Button>
+        <Button onClick={onCancel}>Annuler</Button>
+      </Form.Item>
+    </Form>
   );
+};
+
+TaskForm.propTypes = {
+  all: PropTypes.shape({
+    activites: PropTypes.shape({
+      map: PropTypes.func
+    }),
+    appelants: PropTypes.shape({
+      map: PropTypes.func
+    }),
+    categories: PropTypes.shape({
+      map: PropTypes.func
+    }),
+    techniciens: PropTypes.shape({
+      map: PropTypes.func
+    })
+  }),
+  onCancel: PropTypes.any,
+  onSubmit: PropTypes.func
 };
 
 export default TaskForm;

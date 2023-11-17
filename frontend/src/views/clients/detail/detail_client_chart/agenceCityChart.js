@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import ApexCharts from 'react-apexcharts';
-import { Container, Grid, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 
 const AgencesByCityChart = ({ agencesByCity }) => {
   return (
@@ -9,14 +10,14 @@ const AgencesByCityChart = ({ agencesByCity }) => {
       <ApexCharts
         options={{
           xaxis: {
-            categories: agencesByCity.map((item) => item.city),
-          },
+            categories: agencesByCity.map((item) => item.city)
+          }
         }}
         series={[
           {
             name: 'Agences',
-            data: agencesByCity.map((item) => item.count),
-          },
+            data: agencesByCity.map((item) => item.count)
+          }
         ]}
         type="bar"
         width="100%"
@@ -24,6 +25,12 @@ const AgencesByCityChart = ({ agencesByCity }) => {
       />
     </Paper>
   );
+};
+
+AgencesByCityChart.propTypes = {
+  agencesByCity: PropTypes.shape({
+    map: PropTypes.func
+  })
 };
 
 export default AgencesByCityChart;

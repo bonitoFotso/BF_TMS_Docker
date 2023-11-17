@@ -20,7 +20,7 @@ const AgenceDetail = () => {
         setAgence(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Erreur lors de la récupération des détails de l\'agence :', error);
+        console.error("Erreur lors de la récupération des détails de l'agence :", error);
         setError(error);
         setLoading(false);
       }
@@ -40,7 +40,7 @@ const AgenceDetail = () => {
       setAgence(response.data);
       setIsEditing(false);
     } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'agence :', error);
+      console.error("Erreur lors de la mise à jour de l'agence :", error);
       // Gérer les erreurs de mise à jour de manière appropriée (par exemple, afficher un message d'erreur à l'utilisateur)
     }
   };
@@ -62,12 +62,12 @@ const AgenceDetail = () => {
   }
 
   if (!agence) {
-    return <div>Aucun détail d'agence trouvé.</div>;
+    return <div>Aucun détail d agence trouvé.</div>;
   }
 
   return (
     <div>
-      <h2>Détails de l'Agence</h2>
+      <h2>Détails de l Agence</h2>
       {isEditing ? (
         <div>
           <TextField name="name" label="Nom de l'agence" value={updatedAgence.name} onChange={handleFieldChange} />
@@ -81,7 +81,7 @@ const AgenceDetail = () => {
         </div>
       ) : (
         <div>
-          <p>Nom de l'agence : {agence.name}</p>
+          <p>Nom de l agence : {agence.name}</p>
           {/* Affichez d'autres champs ici */}
           <Button variant="contained" color="primary" onClick={handleEditClick}>
             Éditer

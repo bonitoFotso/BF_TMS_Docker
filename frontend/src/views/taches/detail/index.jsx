@@ -95,7 +95,7 @@ const TacheDetail = () => {
           <p>Appelant : {tache.appelant}</p>
           <p>Priorité : {tache.priorite}</p>
           <p>Description : {tache.description}</p>
-          <p>Numéro d'OS : {tache.n_OS}</p>
+          <p>Numéro d OS : {tache.n_OS}</p>
           {/* Affichez d'autres champs ici */}
           <Button variant="contained" color="primary" onClick={handleEditClick}>
             Éditer

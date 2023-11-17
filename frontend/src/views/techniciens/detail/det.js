@@ -48,8 +48,8 @@ const TechnicienDetail = () => {
 
       const response = await axios.put(`${API_URL}/techniciens/${id}/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+          'Content-Type': 'multipart/form-data'
+        }
       });
 
       setTechnicien(response.data);
@@ -105,7 +105,9 @@ const TechnicienDetail = () => {
           <p>Nom : {technicien.nom}</p>
           <p>Prénom : {technicien.prenom}</p>
           <p>Téléphone : {technicien.tel}</p>
-          <p>Photo : <img src={technicien.photo} alt="Photo du technicien" /></p>
+          <p>
+            Photo : <img src={technicien.photo} alt="technicien" />
+          </p>
           <Button variant="contained" color="primary" onClick={handleEditClick}>
             Éditer
           </Button>

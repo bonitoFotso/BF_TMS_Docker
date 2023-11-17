@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Form, Input, Select, DatePicker, Button } from 'antd';
 import axios from 'axios';
@@ -10,22 +11,23 @@ const TacheForm = ({ initialValues, onSubmit, onCancel }) => {
   const handleSubmit = () => {
     form
       .validateFields()
-      .then(values => {
+      .then((values) => {
         form.resetFields();
 
         // Utilisez Axios pour soumettre les données modifiées
-        axios.put(`${API_URL}/taches/${initialValues.id}`, values)
-          .then(response => {
+        axios
+          .put(`${API_URL}/taches/${initialValues.id}`, values)
+          .then((response) => {
             // Gérez la réponse réussie
             console.log('Tâche mise à jour avec succès:', response.data);
             onSubmit(response.data);
           })
-          .catch(error => {
+          .catch((error) => {
             // Gérez les erreurs
             console.error('Erreur lors de la mise à jour de la tâche :', error);
           });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Validation failed:', error);
       });
   };
@@ -70,6 +72,14 @@ const TacheForm = ({ initialValues, onSubmit, onCancel }) => {
       </Form.Item>
     </Form>
   );
+};
+
+TacheForm.propTypes = {
+  initialValues: PropTypes.shape({
+    id: PropTypes.any
+  }),
+  onCancel: PropTypes.func,
+  onSubmit: PropTypes.func
 };
 
 export default TacheForm;

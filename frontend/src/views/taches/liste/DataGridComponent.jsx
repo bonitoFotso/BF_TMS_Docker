@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import { Modal, Form, Input, Select, DatePicker, Button, DatePickerProps, Space } from 'antd';
+import { Modal, Form, Input, Select, DatePicker, Button } from 'antd';
 
 import API_URL from 'conf';
 
@@ -12,7 +13,7 @@ const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
-const DataGridComponent = ({all}) => {
+const DataGridComponent = ({ all }) => {
   const [tache, setTache] = useState([]);
   const [selectedTache, setSelectedTache] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,9 +48,7 @@ const DataGridComponent = ({all}) => {
 
   const onSubmit = (updatedTache) => {
     // Mettez à jour la tâche dans l'état local ou effectuez d'autres actions nécessaires
-    setTache((prevTache) =>
-      prevTache.map((t) => (t.id === updatedTache.id ? updatedTache : t))
-    );
+    setTache((prevTache) => prevTache.map((t) => (t.id === updatedTache.id ? updatedTache : t)));
 
     // Fermez le modal
     handleCloseModal();
@@ -77,17 +76,11 @@ const DataGridComponent = ({all}) => {
       });
   };
 
-  const renderActivite = (params) => (
-    <span>{params.row.activite.map((act) => act.nom).join(', ')}</span>
-  );
+  const renderActivite = (params) => <span>{params.row.activite.map((act) => act.nom).join(', ')}</span>;
 
-  const renderCategorie = (params) => (
-    <span>{params.row.categorie.map((cat) => cat.nom).join(', ')}</span>
-  );
+  const renderCategorie = (params) => <span>{params.row.categorie.map((cat) => cat.nom).join(', ')}</span>;
 
-  const renderAppelant = (params) => (
-    <span>{params.row.appelant.name}</span>
-  );
+  const renderAppelant = (params) => <span>{params.row.appelant.name}</span>;
 
   const columns = [
     { field: 'id', headerName: 'ID', flex: 1 },
@@ -98,28 +91,26 @@ const DataGridComponent = ({all}) => {
       field: 'activite',
       headerName: 'Activité',
       flex: 2,
-      renderCell: renderActivite,
+      renderCell: renderActivite
     },
     {
       field: 'categorie',
       headerName: 'Catégorie',
       flex: 2,
-      renderCell: renderCategorie,
+      renderCell: renderCategorie
     },
     {
       field: 'appelant',
       headerName: 'Appelant',
       flex: 2,
-      renderCell: renderAppelant,
+      renderCell: renderAppelant
     },
     {
       field: 'edit',
       headerName: 'Modifier',
       flex: 2,
-      renderCell: (params) => (
-        <button onClick={() => handleEditClick(params.row)}>Modifier</button>
-      ),
-    },
+      renderCell: (params) => <button onClick={() => handleEditClick(params.row)}>Modifier</button>
+    }
   ];
 
   return (
@@ -150,7 +141,7 @@ const DataGridComponent = ({all}) => {
             <Form.Item label="Nom" name="nom" rules={[{ required: true, message: 'Veuillez saisir le nom!' }]}>
               <Input />
             </Form.Item>
-            
+
             <Form.Item label="Statut" name="status" rules={[{ required: true, message: 'Veuillez sélectionner le statut!' }]}>
               <Select>
                 <Option value="En attente">En attente</Option>
@@ -196,6 +187,20 @@ const DataGridComponent = ({all}) => {
       </Modal>
     </div>
   );
+};
+
+DataGridComponent.propTypes = {
+  all: PropTypes.shape({
+    activites: PropTypes.shape({
+      map: PropTypes.func
+    }),
+    appelants: PropTypes.shape({
+      map: PropTypes.func
+    }),
+    categories: PropTypes.shape({
+      map: PropTypes.func
+    })
+  })
 };
 
 export default DataGridComponent;

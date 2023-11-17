@@ -5,13 +5,13 @@ const EvolutionChart = ({ monthlyData }) => {
   try {
     // Vérifier si les données mensuelles sont disponibles
     if (!monthlyData || monthlyData.length === 0) {
-      throw new Error("Aucune donnée mensuelle disponible pour le graphique.");
+      throw new Error('Aucune donnée mensuelle disponible pour le graphique.');
     }
 
     // Formater les données pour l'axe X (dates)
     const formattedData = monthlyData.map((item) => ({
       x: new Date(item.month).getTime(),
-      y: item.client_count,
+      y: item.client_count
     }));
 
     return (
@@ -19,46 +19,46 @@ const EvolutionChart = ({ monthlyData }) => {
         options={{
           chart: {
             toolbar: {
-              show: false,
-            },
+              show: false
+            }
           },
           xaxis: {
             type: 'datetime',
             labels: {
-              format: 'MMM yyyy',
-            },
+              format: 'MMM yyyy'
+            }
           },
           yaxis: {
             title: {
-              text: 'Nombre de clients',
-            },
+              text: 'Nombre de clients'
+            }
           },
           colors: ['#4CAF50'],
           dataLabels: {
-            enabled: false,
+            enabled: false
           },
           plotOptions: {
             bar: {
-              horizontal: false,
-            },
+              horizontal: false
+            }
           },
           stroke: {
-            curve: 'smooth',
+            curve: 'smooth'
           },
           grid: {
-            show: true,
+            show: true
           },
           tooltip: {
             x: {
-              format: 'MMM yyyy',
-            },
-          },
+              format: 'MMM yyyy'
+            }
+          }
         }}
         series={[
           {
             name: 'Clients',
-            data: formattedData,
-          },
+            data: formattedData
+          }
         ]}
         type="bar"
         width="100%"
@@ -66,12 +66,12 @@ const EvolutionChart = ({ monthlyData }) => {
       />
     );
   } catch (error) {
-    console.error("Erreur dans EvolutionChart :", error.message);
+    console.error('Erreur dans EvolutionChart :', error.message);
 
     return (
       <div>
         <h2>Erreur</h2>
-        <p>Une erreur s'est produite lors de la création du graphique.</p>
+        <p>Une erreur s est produite lors de la création du graphique.</p>
       </div>
     );
   }

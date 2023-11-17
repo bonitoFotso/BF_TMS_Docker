@@ -1,6 +1,5 @@
 import { lazy } from 'react';
-import PrivateRoute from './protect';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'ui-component/Loadable';
 import AuthGuard from 'utils/route-guard/AuthGuard';
@@ -32,13 +31,15 @@ const Profile = Loadable(lazy(() => import('views/profile')));
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 const MainRoutes = () => {
-  const location = useLocation();
-
   return (
     <Routes>
       <Route
         path="/"
-        element={<AuthGuard><MainLayout /></AuthGuard>}
+        element={
+          <AuthGuard>
+            <MainLayout />
+          </AuthGuard>
+        }
       >
         <Route index element={<DashboardDefault />} />
         <Route path="agence-list" element={<AgenceListCreate />} />
@@ -62,7 +63,6 @@ const MainRoutes = () => {
         <Route path="icons/material-icons" element={<UtilsMaterialIcons />} />
         <Route path="profile" element={<Profile />} />
         <Route path="sample-page" element={<SamplePage />} />
-
       </Route>
     </Routes>
   );

@@ -15,10 +15,19 @@ fi
 # Just make sure you really mean it 
 # python manage.py flush --no-input
 
-# We have base custom user model so need to makemigrations out of box
+# We have a base custom user model so need to makemigrations out of the box
 python manage.py makemigrations
 
 python manage.py migrate
+
+# Fetch username, email, and password from .env.dev
+USERNAME=$EMAIL
+EMAIL=$EMAIL
+PASSWORD=$PASSWORD
+
+# Create superuser
+python manage.py createsuperuser --noinput --username=$USERNAME --email=$EMAIL --password=$PASSWORD
+
 python manage.py collectstatic --noinput
 
 exec "$@"

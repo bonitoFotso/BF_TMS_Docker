@@ -15,7 +15,7 @@ const AgenceListCreate = () => {
     city: '',
     phone: '',
     email: '',
-    n_agence: '',
+    n_agence: ''
   });
 
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ const AgenceListCreate = () => {
     const { name, value } = e.target;
     setNewAgence({
       ...newAgence,
-      [name]: value,
+      [name]: value
     });
   };
 
@@ -56,10 +56,10 @@ const AgenceListCreate = () => {
         city: '',
         phone: '',
         email: '',
-        n_agence: '',
+        n_agence: ''
       });
     } catch (error) {
-      console.error('Erreur lors de la création de l\'agence :', error);
+      console.error("Erreur lors de la création de l'agence :", error);
       // Gérer les erreurs de création de manière appropriée (par exemple, afficher un message d'erreur à l'utilisateur)
     }
   };
@@ -74,11 +74,8 @@ const AgenceListCreate = () => {
 
   // Définissez les colonnes du DataGrid
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100,
-    renderCell: (params) => (
-        <Link to={`/agence/${params.value}`}>{params.value}</Link>
-      ) },
-    { field: 'name', headerName: 'Nom de l\'agence', flex: 1 },
+    { field: 'id', headerName: 'ID', width: 100, renderCell: (params) => <Link to={`/agence/${params.value}`}>{params.value}</Link> },
+    { field: 'name', headerName: "Nom de l'agence", flex: 1 }
     // Ajoutez d'autres colonnes ici
   ];
 
@@ -96,12 +93,7 @@ const AgenceListCreate = () => {
       </div>
       <h2>Créer une Agence</h2>
       <div>
-        <TextField
-          name="name"
-          label="Nom de l'agence"
-          value={newAgence.name}
-          onChange={handleInputChange}
-        />
+        <TextField name="name" label="Nom de l'agence" value={newAgence.name} onChange={handleInputChange} />
         {/* Ajoutez d'autres champs ici */}
         <Button variant="contained" color="primary" onClick={handleCreateAgence}>
           Créer
@@ -112,4 +104,3 @@ const AgenceListCreate = () => {
 };
 
 export default AgenceListCreate;
-

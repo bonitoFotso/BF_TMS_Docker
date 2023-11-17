@@ -1,6 +1,7 @@
 // DataGridComponent.js
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { Modal,Button } from 'antd';
+import { Modal, Button } from 'antd';
 import TaskForm from './TaskForm';
 
 const CreerTache = ({ all }) => {
@@ -19,7 +20,7 @@ const CreerTache = ({ all }) => {
 
   return (
     <div style={{ height: 400, width: '100%' }}>
-        <Button onClick={handleEditClick} variant="outlined" color="primary">
+      <Button onClick={handleEditClick} variant="outlined" color="primary">
         Créer une tâche
       </Button>
       <Modal title="Modifier la tâche" open={isModalOpen} onCancel={handleCloseModal} footer={null} width={500}>
@@ -27,6 +28,10 @@ const CreerTache = ({ all }) => {
       </Modal>
     </div>
   );
+};
+
+CreerTache.propTypes = {
+  all: PropTypes.any
 };
 
 export default CreerTache;

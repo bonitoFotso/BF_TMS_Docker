@@ -15,15 +15,13 @@ const ClientDetail = () => {
   const [updatedClient, setUpdatedClient] = useState({});
   const [error, setError] = useState(null);
   const token = useSelector((state) => state.account.token);
-  const [tasks, setTasks] = useState([]);
-  const [interactions, setInteractions] = useState([]);
 
   useEffect(() => {
     const fetchClientDetails = async () => {
       try {
         const response = await axios.get(`${API_URL}/clients/${id}/`, {
           headers: {
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`
           }
         });
         setClient(response.data);
@@ -35,37 +33,7 @@ const ClientDetail = () => {
       }
     };
 
-    
-
-    //const fetchClientTasks = async () => {
-    //  try {
-    //    const response = await axios.get(`${API_URL}/clients/${id}/tasks/`, {
-    //      headers: {
-    //        'Authorization': `Bearer ${token}`
-    //      }
-    //    });
-    //    setTasks(response.data);
-    //  } catch (error) {
-    //    console.error('Erreur lors de la récupération des tâches du client :', error);
-    //  }
-    //};
-
-    //const fetchClientInteractions = async () => {
-    //  try {
-    //    const response = await axios.get(`${API_URL}/clients/${id}/interactions/`, {
-    //      headers: {
-    //        'Authorization': `Bearer ${token}`
-    //      }
-    //    });
-    //    setInteractions(response.data);
-    //  } catch (error) {
-    //    console.error('Erreur lors de la récupération des interactions du client :', error);
-    //  }
-    //};
-    
     fetchClientDetails();
-    //fetchClientTasks();
-    //fetchClientInteractions();
   }, [id, token]);
 
   const handleEditClick = () => {
@@ -77,7 +45,7 @@ const ClientDetail = () => {
     try {
       const response = await axios.put(`${API_URL}/clients/${id}/`, updatedClient, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       });
       setClient(response.data);
@@ -139,21 +107,7 @@ const ClientDetail = () => {
           </Button>
         </div>
       )}
-
-      <h2>Tâches du Client</h2>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>{task.name} - État : {task.status}</li>
-        ))}
-      </ul>
-
-      <h2>Historique des Interactions</h2>
-      <ul>
-        {interactions.map((interaction) => (
-          <li key={interaction.id}>{interaction.description} - Date : {interaction.date}</li>
-        ))}
-      </ul>
-      <ClientDetailChart id = {id}/>
+      <ClientDetailChart id={id} />
     </div>
   );
 };

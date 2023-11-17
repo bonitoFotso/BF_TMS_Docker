@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom'; // Importez Link
 
 const TechnicienListCreate = () => {
   const [techniciens, setTechniciens] = useState([]);
-  const [newTechnicien, setNewTechnicien] = useState({});
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,13 +25,11 @@ const TechnicienListCreate = () => {
     fetchTechniciens();
   }, []);
 
-  const handleInputChange = (e, id) => {
+  /*const handleInputChange = (e, id) => {
     const { name, value } = e.target;
-    const updatedTechniciens = techniciens.map((technicien) =>
-      technicien.id === id ? { ...technicien, [name]: value } : technicien
-    );
+    const updatedTechniciens = techniciens.map((technicien) => (technicien.id === id ? { ...technicien, [name]: value } : technicien));
     setTechniciens(updatedTechniciens);
-  };
+  };*/
 
   const handleUpdateTechnicien = async (id) => {
     try {
@@ -55,17 +51,14 @@ const TechnicienListCreate = () => {
   }
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 70,
-    renderCell: (params) => (
-        <Link to={`/technicien/${params.value}`}>{params.value}</Link>
-      ), },
+    { field: 'id', headerName: 'ID', width: 70, renderCell: (params) => <Link to={`/technicien/${params.value}`}>{params.value}</Link> },
     { field: 'nom', headerName: 'Nom', width: 150, editable: true },
     { field: 'prenom', headerName: 'Prénom', width: 150, editable: true },
     { field: 'tel', headerName: 'Téléphone', width: 150, editable: true },
     { field: 'email', headerName: 'Email', width: 250, editable: true },
     { field: 'matricule', headerName: 'Matricule', width: 150, editable: true },
-    { field: 'vitesse_execution', headerName: 'Vitesse d\'exécution', width: 180, editable: true },
-    { field: 'efficacite', headerName: 'Efficacité', width: 150, editable: true },
+    { field: 'vitesse_execution', headerName: "Vitesse d'exécution", width: 180, editable: true },
+    { field: 'efficacite', headerName: 'Efficacité', width: 150, editable: true }
   ];
 
   return (
@@ -91,4 +84,3 @@ const TechnicienListCreate = () => {
 };
 
 export default TechnicienListCreate;
-

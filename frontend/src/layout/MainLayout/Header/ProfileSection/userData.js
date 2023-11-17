@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import API_URL from 'conf'
+import API_URL from 'conf';
 import { useSelector } from 'react-redux';
 
 const UserData = () => {
@@ -12,7 +12,7 @@ const UserData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/userdata`,{id : id});
+        const response = await axios.get(`${API_URL}/userdata`, { id: id });
         setuser(response.data);
         setLoading(false);
       } catch (error) {
@@ -20,9 +20,9 @@ const UserData = () => {
         setError(error);
         setLoading(false);
       }
-    }
+    };
     fetchData();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return <div>Chargement en cours...</div>;
@@ -32,9 +32,7 @@ const UserData = () => {
     return <div>Une erreur s&apos;est produite : {error.message}</div>;
   }
 
-  return (
-    user
-  );
+  return user;
 };
 
 export default UserData;
