@@ -88,6 +88,12 @@ const RestLogin = (props, { ...others }) => {
                               password: values.password,
                               email: values.email
                           },
+                          /*{
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Access-Control-Allow-Origin': 'http://192.168.44.41:8000',  // Ajoutez l'origine de votre application React
+                              }
+                          }*/
                           
                           )
                           .then(function (response) {

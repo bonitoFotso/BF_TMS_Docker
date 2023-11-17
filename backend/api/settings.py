@@ -32,14 +32,30 @@ CORS_ALLOWED_ORIGINS = [
     "http://172.21.0.5:8080",
     "http://localhost:8080",
     "http://127.0.0.1:8080",
-    #"*",
-    "http://dev-nginx:8080",
-    "http://dev-react:3000",
-    "http://23.227.178.54:8000",  # Ajoutez l'adresse de votre service nginx dans Docker Compose
-    "http://23.227.178.54:8080",
-    "http://23.227.178.54:3000"
+    ##"*",
+    "http://192.168.44.47:8080",  # Ajoutez l'adresse de votre réseau local
+    "http://192.168.44.47:3000",
+    "http://192.168.44.41:8000",
+    "http://192.168.44.41:3000",
+    "http://192.168.44.41:8080",
+   #"http://192.168.44.0/24",  # Ou utilisez le masque CIDR pour le réseau local
+   #"http://*.*.*.*",  # Utilisez l'astérisque pour autoriser toutes les origines
+   #"https://*.*.*.*",
+]
+CORS_ALLOW_HEADERS = [
+    'access-control-allow-headers',
+    'access-control-allow-methods',
+    'content-type',
 ]
 
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 # Application definition
 
 INSTALLED_APPS = [
