@@ -20,13 +20,8 @@ python manage.py makemigrations
 
 python manage.py migrate
 
-# Fetch username, email, and password from .env.dev
-USERNAME=$EMAIL
-EMAIL=$EMAIL
-PASSWORD=$PASSWORD
-
 # Create superuser
-python manage.py createsuperuser --noinput --username=$USERNAME --email=$EMAIL --password=$PASSWORD
+python manage.py createsuperuser --noinput --email=$DJANGO_ADMIN_EMAIL --password=$DJANGO_ADMIN_PASSWORD
 
 python manage.py collectstatic --noinput
 

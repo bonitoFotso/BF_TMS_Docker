@@ -10,8 +10,8 @@ class Command(BaseCommand):
 
         # Fetch username, email, and password from environment variables
         #username = os.environ.get('EMAIL', 'admin')
-        email = os.environ.get('EMAIL', 'admin@example.com')
-        password = os.environ.get('PASSWORD', 'your_password')
+        email = os.environ.get('DJANGO_ADMIN_EMAIL', 'admin@example.com')
+        password = os.environ.get('DJANGO_ADMIN_PASSWORD', 'your_password')
 
         if not User.objects.filter(email=email).exists():
             User.objects.create_superuser( email, password)
