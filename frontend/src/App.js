@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
@@ -8,12 +8,10 @@ import Routes from 'routes';
 
 // defaultTheme
 import themes from 'themes';
-import { Provider } from 'react-redux';
 import { AuthProvider } from './authContext'; // Importez le AuthProvider
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
-import store from './redux/store'; // Importez votre magasin Redux
 
 // ==============================|| APP ||============================== //
 

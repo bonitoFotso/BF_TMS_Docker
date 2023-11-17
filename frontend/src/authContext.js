@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   const authToken = useSelector((state) => state.account.refresh);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading] = useState(true);
   const dispatcher = useDispatch();
 
   const login = (userData) => {
