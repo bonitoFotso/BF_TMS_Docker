@@ -19,13 +19,47 @@ const EvolutionChart = ({ monthlyData }) => {
         options={{
           chart: {
             toolbar: {
-              show: false
+              show: true
+            },
+            zoom: {
+              enabled: true
             }
           },
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                legend: {
+                  position: 'bottom',
+                  offsetX: -10,
+                  offsetY: 0
+                }
+              }
+            }
+          ],
           xaxis: {
             type: 'datetime',
             labels: {
               format: 'MMM yyyy'
+            }
+          },
+          legend: {
+            show: true,
+            fontSize: '14px',
+            fontFamily: `'Roboto', sans-serif`,
+            position: 'bottom',
+            offsetX: 20,
+            labels: {
+              useSeriesColors: false
+            },
+            markers: {
+              width: 16,
+              height: 16,
+              radius: 5
+            },
+            itemMargin: {
+              horizontal: 15,
+              vertical: 8
             }
           },
           yaxis: {
@@ -33,13 +67,15 @@ const EvolutionChart = ({ monthlyData }) => {
               text: 'Nombre de clients'
             }
           },
+          
           colors: ['#4CAF50'],
           dataLabels: {
-            enabled: false
+            enabled: true
           },
           plotOptions: {
             bar: {
-              horizontal: false
+              horizontal: false,
+              columnWidth: '50%'
             }
           },
           stroke: {

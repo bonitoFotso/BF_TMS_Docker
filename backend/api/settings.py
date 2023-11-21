@@ -38,9 +38,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.44.41:8000",
     "http://192.168.44.41:3000",
     "http://192.168.44.41:8080",
-    "http://23.227.178.59:8000",
-    "http://23.227.178.59:3000",
-    "http://23.227.178.59:8080",
    #"http://192.168.44.0/24",  # Ou utilisez le masque CIDR pour le réseau local
    #"http://*.*.*.*",  # Utilisez l'astérisque pour autoriser toutes les origines
    #"https://*.*.*.*",
@@ -50,6 +47,7 @@ CORS_ALLOW_HEADERS = [
     'access-control-allow-methods',
     'content-type',
     'Authorization',
+    '*'
 ]
 
 CORS_ALLOW_METHODS = [

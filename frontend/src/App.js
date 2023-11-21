@@ -8,7 +8,7 @@ import Routes from 'routes';
 
 // defaultTheme
 import themes from 'themes';
-import { AuthProvider } from './authContext'; // Importez le AuthProvider
+//import { AuthProvider } from './authContext'; // Importez le AuthProvider
 
 // project imports
 import NavigationScroll from 'layout/NavigationScroll';
@@ -24,11 +24,9 @@ const App = () => {
       <ThemeProvider theme={themes(customization)}>
         <CssBaseline />
         <NavigationScroll>
-          <AuthProvider>
-            {' '}
-            {/* Enveloppez App avec le AuthProvider */}
-            <Routes />
-          </AuthProvider>
+          {/* <AuthProvider>*/}
+          <Routes />
+          {/* </AuthProvider>*/}
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>

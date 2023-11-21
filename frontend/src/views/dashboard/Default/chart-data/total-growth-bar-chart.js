@@ -59,7 +59,7 @@ const chartData = {
       type: 'solid'
     },
     dataLabels: {
-      enabled: false
+      enabled: true
     },
     grid: {
       show: true
