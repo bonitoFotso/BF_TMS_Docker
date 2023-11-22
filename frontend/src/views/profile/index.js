@@ -1,30 +1,40 @@
-import AccountProfile from './AccountProfile';
-import { AccountProfileDetails } from './account-profile-details';
-import { Box, Container, Stack, Unstable_Grid2 as Grid } from '@mui/material';
+import React from 'react';
+import { Avatar, Descriptions, Typography } from 'antd';
 
-// Custom components
+const { Title, Paragraph } = Typography;
 
-const Profile = () => {
-  // Sélecteur pour récupérer les données de l'utilisateur depuis le magasin Redux
-  // Votre logique pour afficher les données de l'utilisateur
+const PageDeProfil = () => {
+  const urlImageAvatar = 'votre-url-image-avatar';
+  const nom = 'Votre Nom';
+  const email = 'votreemail@example.com';
+  const téléphone = '123-456-7890';
+  const adresse = '123, rue Principale, Ville, Pays';
+  const siteWeb = 'www.exampledd.com';
+
   return (
-    <Box>
-      <Container maxWidth="xxl">
-        <Stack spacing={1}>
-          <div>
-            <Grid container spacing={3}>
-              <Grid xs={12} md={6} lg={4}>
-                <AccountProfile />
-              </Grid>
-              <Grid xs={12} md={6} lg={8}>
-                <AccountProfileDetails />
-              </Grid>
-            </Grid>
-          </div>
-        </Stack>
-      </Container>
-    </Box>
+    <div style={{ padding: '20px' }}>
+      <Avatar size={128} src={urlImageAvatar} />
+
+      <Descriptions title="Profil" bordered style={{ marginTop: '20px' }}>
+        <Descriptions.Item label="Nom">{nom}</Descriptions.Item>
+        <Descriptions.Item label="Email">{email}</Descriptions.Item>
+        <Descriptions.Item label="Téléphone">{téléphone}</Descriptions.Item>
+        <Descriptions.Item label="Adresse" span={2}>
+          {adresse}
+        </Descriptions.Item>
+        <Descriptions.Item label="Site Web">{siteWeb}</Descriptions.Item>
+      </Descriptions>
+
+      <div style={{ marginTop: '20px' }}>
+        <Title level={2}>À propos de moi</Title>
+        <Paragraph>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+          enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </Paragraph>
+      </div>
+    </div>
   );
 };
 
-export default Profile;
+export default PageDeProfil;

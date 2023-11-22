@@ -31,7 +31,7 @@ const TacheList = () => {
   return (
     <Card>
       <h2>Liste des Tâches</h2>
-      <CreerTache all={all} />
+      <CreerTache all={all} setAll={setAll} />
       <LoadingErrorComponent loading={loading} error={error} />
       <DataGridComponent all={all} />
     </Card>

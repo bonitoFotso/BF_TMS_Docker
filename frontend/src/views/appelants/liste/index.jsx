@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid'; // Import du composant DataGrid
 import API_URL from '../../../conf';
+import AppelantForm from './CreateAppelant';
+import { Modal, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'id', headerName: 'ID', width: 100, renderCell: (params) => <Link to={`/appelant/${params.value}`}>{params.value}</Link> },
   { field: 'name', headerName: "Nom de l'appelant", flex: 1 }
   // Ajoutez d'autres colonnes pour les autres champs de l'appelant ici
 ];
 
 const AppelantListCreate = () => {
   const [appelants, setAppelants] = useState([]);
-  const [newAppelant, setNewAppelant] = useState({
-    name: ''
-    // autres champs de l'appelant
-  });
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchAppelants = async () => {
@@ -37,26 +34,21 @@ const AppelantListCreate = () => {
     fetchAppelants();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewAppelant({
-      ...newAppelant,
-      [name]: value
-    });
+  const handleEditClick = () => {
+    setIsModalOpen(true);
   };
 
-  const handleCreateAppelant = async () => {
-    try {
-      const response = await axios.post(`${API_URL}/appelants/`, newAppelant); // Mettez l'URL correcte de votre API Django
-      setAppelants([...appelants, response.data]);
-      setNewAppelant({
-        name: ''
-        // autres champs de l'appelant
-      });
-    } catch (error) {
-      console.error("Erreur lors de la création de l'appelant :", error);
-      // Gérer les erreurs de création de manière appropriée (par exemple, afficher un message d'erreur à l'utilisateur)
-    }
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const onSubmit = () => {
+    handleCloseModal();
+  };
+
+  const updateAppelantsList = (newAppelant) => {
+    console.log('Nouvelle appelant créée :', newAppelant);
+    setAppelants((prevAppelants) => [...prevAppelants, newAppelant]);
   };
 
   if (loading) {
@@ -70,17 +62,15 @@ const AppelantListCreate = () => {
   return (
     <div>
       <h2>Liste des Appelants</h2>
+      <Button onClick={handleEditClick} variant="outlined" color="primary">
+        Créer un appelant
+      </Button>
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid rows={appelants} columns={columns} pageSize={10} rowsPerPageOptions={[10, 25, 50]} checkboxSelection />
       </div>
-      <h2>Créer un Appelant</h2>
-      <div>
-        <TextField name="name" label="Nom de l'appelant" value={newAppelant.name} onChange={handleInputChange} />
-        {/* Ajoutez d'autres champs ici */}
-        <Button variant="contained" color="primary" onClick={handleCreateAppelant}>
-          Créer
-        </Button>
-      </div>
+      <Modal title="Creer un appelant" open={isModalOpen} onCancel={handleCloseModal} footer={null} width={500}>
+        <AppelantForm onAppelantUpdated={updateAppelantsList} onSubmit={onSubmit} onCancel={handleCloseModal} />
+      </Modal>
     </div>
   );
 };

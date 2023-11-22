@@ -67,7 +67,7 @@ const EvolutionChart = ({ monthlyData }) => {
               text: 'Nombre de clients'
             }
           },
-          
+
           colors: ['#4CAF50'],
           dataLabels: {
             enabled: true

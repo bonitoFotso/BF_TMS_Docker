@@ -36,8 +36,7 @@ class Client(models.Model):
         return generated_n_client
 
     def save(self, *args, **kwargs):
-        if not self.n_client:
-            self.n_client = self.generate_n_client()
+        self.n_client = self.generate_n_client()
         super().save(*args, **kwargs)
     
     class Meta:
@@ -72,8 +71,7 @@ class Agence(models.Model):
         return generated_n_agence
     
     def save(self, *args, **kwargs):
-        if not self.n_agence:
-            self.n_agence = self.generate_n_agence()
+        self.n_agence = self.generate_n_agence()
         super().save(*args, **kwargs)
         
     @receiver(post_save, sender=Client)

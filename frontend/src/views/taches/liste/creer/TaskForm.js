@@ -1,20 +1,44 @@
-// EditTaskForm.js
+// TaskForm.js
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { Form, Input, Select, DatePicker, Button } from 'antd';
+import { Form, Input, Select, DatePicker, Modal, Button } from 'antd';
 import API_URL from 'conf';
-import 'moment/locale/fr'; // Ajoutez cette ligne si vous souhaitez utiliser la localisation française
+import 'moment/locale/fr';
+import CreateActivite from 'views/activites/liste/CreateActivite';
 
 const { Option } = Select;
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
 
-const TaskForm = ({ onSubmit, onCancel, all }) => {
+const TaskForm = ({ onSubmit, onCancel, all, setAll }) => {
   const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalOk = () => {
+    // Ajoutez votre logique de traitement pour la création de la nouvelle entité ici
+    setIsModalOpen(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  const addNewActivite = (activite) => {
+    // Ajoutez la nouvelle activité à la liste des activités
+    const updatedActivites = [...all.activites, activite];
+    // Mettez à jour la liste globale en utilisant setAll
+    setAll((prevAll) => ({
+      ...prevAll,
+      activites: updatedActivites
+    }));
+  };
   const handleSubmit = () => {
     form
       .validateFields()
@@ -36,86 +60,94 @@ const TaskForm = ({ onSubmit, onCancel, all }) => {
   };
 
   return (
-    <Form form={form}>
-      {/* Inclure les champs de formulaire nécessaires pour la modification */}
-      <Form.Item label="Activité" name="activite" rules={[{ required: true, message: 'Veuillez sélectionner l activité!' }]}>
-        <Select mode="multiple" placeholder="Sélectionnez une ou plusieurs activités">
-          {all.activites.map((item) => (
-            <Option key={item.id} value={item.id}>
-              {item.nom}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+    <>
+      <Form form={form}>
+        {/* Inclure les champs de formulaire nécessaires pour la modification */}
+        <Form.Item label="Activité" name="activite" rules={[{ required: true, message: 'Veuillez sélectionner l activité!' }]}>
+          <Select mode="multiple" placeholder="Sélectionnez une ou plusieurs activités">
+            {all.activites.map((item) => (
+              <Option key={item.id} value={item.id}>
+                {item.nom}
+              </Option>
+            ))}
+          </Select>
+          <Button onClick={showModal}>Nouvelle Activité</Button>
+        </Form.Item>
 
-      <Form.Item label="Catégorie" name="categorie" rules={[{ required: true, message: 'Veuillez sélectionner la Catégorie!' }]}>
-        <Select mode="multiple">
-          {all.categories.map((item) => (
-            <Option key={item.id} value={item.id}>
-              {item.nom}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+        <Form.Item label="Catégorie" name="categorie" rules={[{ required: true, message: 'Veuillez sélectionner la Catégorie!' }]}>
+          <Select mode="multiple">
+            {all.categories.map((item) => (
+              <Option key={item.id} value={item.id}>
+                {item.nom}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-      <Form.Item label="Nom" name="nom" rules={[{ required: true, message: 'Veuillez saisir le nom!' }]}>
-        <Input />
-      </Form.Item>
+        <Form.Item label="Nom" name="nom" rules={[{ required: true, message: 'Veuillez saisir le nom!' }]}>
+          <Input />
+        </Form.Item>
 
-      <Form.Item label="Statut" name="status" rules={[{ required: true, message: 'Veuillez sélectionner le statut!' }]}>
-        <Select>
-          <Option value="En attente">En attente</Option>
-          <Option value="En cours">En cours</Option>
-          <Option value="En arrêt">En arrêt</Option>
-          <Option value="Effectué">Effectué</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Priorité" name="priorite" rules={[{ required: true, message: 'Veuillez sélectionner la priorité!' }]}>
-        <Select>
-          <Option value="Bas">Bas</Option>
-          <Option value="Moyen">Moyen</Option>
-          <Option value="Élevé">Élevé</Option>
-        </Select>
-      </Form.Item>
-      <Form.Item label="Appelant" name="appelant" rules={[{ required: true, message: 'Veuillez sélectionner l appelant!' }]}>
-        <Select>
-          {all.appelants.map((item) => (
-            <Option key={item.id} value={item.id}>
-              {item.name}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
-      <Form.Item
-        label="Technicien"
-        name="assignations"
-        rules={[{ required: true, message: 'Veuillez sélectionner le ou les technicien(s)!' }]}
-      >
-        <Select mode="multiple">
-          {all.techniciens.map((tec) => (
-            <Option key={tec.id} value={tec.id}>
-              {tec.nom}
-            </Option>
-          ))}
-        </Select>
-      </Form.Item>
+        <Form.Item label="Statut" name="status" rules={[{ required: true, message: 'Veuillez sélectionner le statut!' }]}>
+          <Select>
+            <Option value="En attente">En attente</Option>
+            <Option value="En cours">En cours</Option>
+            <Option value="En arrêt">En arrêt</Option>
+            <Option value="Effectué">Effectué</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Priorité" name="priorite" rules={[{ required: true, message: 'Veuillez sélectionner la priorité!' }]}>
+          <Select>
+            <Option value="Bas">Bas</Option>
+            <Option value="Moyen">Moyen</Option>
+            <Option value="Élevé">Élevé</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label="Appelant" name="appelant" rules={[{ required: true, message: 'Veuillez sélectionner l appelant!' }]}>
+          <Select>
+            {all.appelants.map((item) => (
+              <Option key={item.id} value={item.id}>
+                {item.name}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Technicien"
+          name="assignations"
+          rules={[{ required: true, message: 'Veuillez sélectionner le ou les technicien(s)!' }]}
+        >
+          <Select mode="multiple">
+            {all.techniciens.map((tec) => (
+              <Option key={tec.id} value={tec.id}>
+                {tec.nom}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
 
-      <Form.Item label="Description" name="description">
-        <Input.TextArea />
-      </Form.Item>
-      <Form.Item label="Numéro d'OS" name="n_OS">
-        <Input />
-      </Form.Item>
-      <Form.Item label="Plage de dates" name="plage_dates">
-        <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" onClick={handleSubmit}>
-          Enregistrer
-        </Button>
-        <Button onClick={onCancel}>Annuler</Button>
-      </Form.Item>
-    </Form>
+        <Form.Item label="Description" name="description">
+          <Input.TextArea />
+        </Form.Item>
+        <Form.Item label="Numéro d'OS" name="n_OS">
+          <Input />
+        </Form.Item>
+        <Form.Item label="Plage de dates" name="plage_dates">
+          <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={handleSubmit}>
+            Enregistrer
+          </Button>
+          <Button onClick={onCancel}>Annuler</Button>
+        </Form.Item>
+      </Form>
+      <div>
+        <Modal title="Nouvelle Activité" open={isModalOpen} onOk={handleModalOk} onCancel={handleModalCancel}>
+          <CreateActivite onActiviteCreated={addNewActivite} onOk={handleModalOk} onCancel={handleModalCancel} />
+        </Modal>
+      </div>
+    </>
   );
 };
 
@@ -135,7 +167,8 @@ TaskForm.propTypes = {
     })
   }),
   onCancel: PropTypes.any,
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
+  setAll: PropTypes.func
 };
 
 export default TaskForm;
