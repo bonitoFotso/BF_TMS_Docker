@@ -7,7 +7,7 @@ import { Card } from '@mui/material';
 import CreerTache from './creer';
 
 const TacheList = () => {
-  const [all, setAll] = useState([]);
+  const [all, setAll] = useState({ activites: [], appelants: [], categories: [], techniciens: [] });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -18,16 +18,15 @@ const TacheList = () => {
         setAll(response.data);
         setLoading(false);
       } catch (error) {
-        console.error('Erreur lors de la récupération des all :', error);
+        console.error('Erreur lors de la récupération des données :', error);
         setError(error);
         setLoading(false);
       }
     };
 
     fetchTacheData();
-    //console.log(all);
   }, []);
-  //console.log(all);
+
   return (
     <Card>
       <h2>Liste des Tâches</h2>
@@ -39,3 +38,4 @@ const TacheList = () => {
 };
 
 export default TacheList;
+

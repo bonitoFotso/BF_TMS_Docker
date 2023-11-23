@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom'; // Importez Link
 import API_URL from '../../../conf';
+import { Modal, Button } from 'antd';
+import CreateCategory from './CreateCategorie';
 
 const CategorieListCreate = () => {
   const [categories, setCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState({
-    nom: '',
-    description: ''
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalOk = () => {
+    // Ajoutez votre logique de traitement pour la création de la nouvelle entité ici
+    setIsModalOpen(false);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -31,25 +41,9 @@ const CategorieListCreate = () => {
     fetchCategories();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewCategory({
-      ...newCategory,
-      [name]: value
-    });
-  };
-
-  const handleCreateCategory = async () => {
-    try {
-      const response = await axios.post(`${API_URL}/categories/`, newCategory);
-      setCategories([...categories, response.data]);
-      setNewCategory({
-        nom: '',
-        description: ''
-      });
-    } catch (error) {
-      console.error('Erreur lors de la création de la catégorie :', error);
-    }
+  const updateCategoryList = (newCategory) => {
+    console.log('Nouvelle categorie créée :', newCategory);
+    setCategories((prevCategories) => [...prevCategories, newCategory]);
   };
 
   if (loading) {
@@ -75,16 +69,14 @@ const CategorieListCreate = () => {
   return (
     <div>
       <h2>Liste des Catégories</h2>
+      <Button onClick={showModal}>Nouvelle Activité</Button>
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid rows={categories} columns={columns} pageSize={5} checkboxSelection disableSelectionOnClick autoHeight />
       </div>
-      <h2>Créer une Catégorie</h2>
       <div>
-        <TextField name="nom" label="Nom de la catégorie" value={newCategory.nom} onChange={handleInputChange} />
-        <TextField name="description" label="Description de la catégorie" value={newCategory.description} onChange={handleInputChange} />
-        <Button variant="contained" color="primary" onClick={handleCreateCategory}>
-          Créer
-        </Button>
+        <Modal title="Nouvelle Activité" open={isModalOpen} onOk={handleModalOk} onCancel={handleModalCancel}>
+          <CreateCategory onCategoryCreated={updateCategoryList} onOk={handleModalOk} onCancel={handleModalCancel} />
+        </Modal>
       </div>
     </div>
   );
