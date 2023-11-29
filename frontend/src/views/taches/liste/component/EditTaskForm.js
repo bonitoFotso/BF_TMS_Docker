@@ -15,6 +15,7 @@ const { RangePicker } = DatePicker;
 
 const EditTaskForm = ({ initialValues, onSubmit, onCancel, all }) => {
   const [form] = Form.useForm();
+
   console.log(initialValues);
 
   const handleSubmit = () => {
@@ -27,6 +28,7 @@ const EditTaskForm = ({ initialValues, onSubmit, onCancel, all }) => {
             console.log('Tâche mise à jour avec succès:', response.data);
             form.resetFields();
             onSubmit(response.data);
+            console.log(initialValues);
           })
           .catch((error) => {
             console.error('Erreur lors de la mise à jour de la tâche :', error);
@@ -36,7 +38,6 @@ const EditTaskForm = ({ initialValues, onSubmit, onCancel, all }) => {
         console.error('Validation failed:', error);
       });
   };
-
   return (
     <Form
       form={form}
@@ -139,32 +140,17 @@ const EditTaskForm = ({ initialValues, onSubmit, onCancel, all }) => {
 
 EditTaskForm.propTypes = {
   all: PropTypes.shape({
-    activites: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    appelants: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    categories: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    techniciens: PropTypes.shape({
-      map: PropTypes.func
-    })
+    activites: PropTypes.array,
+    appelants: PropTypes.array,
+    categories: PropTypes.array,
+    techniciens: PropTypes.array
+    // ... (définissez les autres types d'entités)
   }),
   initialValues: PropTypes.shape({
-    activite: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    appelant: PropTypes.shape({
-      id: PropTypes.any
-    }),
-    assignations: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    categorie: PropTypes.shape({
-      map: PropTypes.func
-    }),
+    activite: PropTypes.array,
+    appelant: PropTypes.any, // Ajustez ici pour accepter un tableau au lieu d'un objet
+    assignations: PropTypes.array,
+    categorie: PropTypes.array,
     date_debut: PropTypes.any,
     date_fin: PropTypes.any,
     description: PropTypes.any,
@@ -172,7 +158,8 @@ EditTaskForm.propTypes = {
     n_OS: PropTypes.any,
     nom: PropTypes.any,
     priorite: PropTypes.any,
-    status: PropTypes.any
+    status: PropTypes.any,
+    techniciens: PropTypes.array
   }),
   onCancel: PropTypes.any,
   onSubmit: PropTypes.func

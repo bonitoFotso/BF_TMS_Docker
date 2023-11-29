@@ -36,7 +36,6 @@ class AgenceSerializer(serializers.ModelSerializer):
 
 
 class AppelantSerializer(serializers.ModelSerializer):
-    #agence = AgenceSerializer()
     class Meta:
         model = Appelant
         fields = '__all__'

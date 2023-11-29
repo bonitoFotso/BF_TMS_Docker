@@ -27,12 +27,11 @@ class Client(models.Model):
         return '{0}_{1}'.format(self.name,'Siege')
     
     def generate_n_client(self):
+        cc = Client.objects.count()
         today = datetime.date.today()
-        year = today.year
-        formatted_name = self.name.replace(" ", "_").upper()  # Convertit le nom en majuscules et remplace les espaces par des underscores
-        formatted_city = self.city.replace(" ", "_").upper()  # Convertit la ville en majuscules et remplace les espaces par des underscores
-        formatted_date = today.strftime("%Y%m%d")  # Format de date : YYYYMMDD
-        generated_n_client = f"{formatted_name}_{formatted_city}_{formatted_date}"
+        formatted_name = 'C'  # Convertit le nom en majuscules et remplace les espaces par des underscores
+        formatted_date = today.strftime("%Y%m")  # Format de date : YYYYMMDD
+        generated_n_client = f"{formatted_name}{formatted_date}{cc}"
         return generated_n_client
 
     def save(self, *args, **kwargs):
@@ -67,7 +66,7 @@ class Agence(models.Model):
     def generate_n_agence(self):
         agence_count = Agence.objects.filter(siege=self.siege).count()
         formatted_n_client = self.siege.n_client.upper()
-        generated_n_agence = f"{formatted_n_client}_AG{agence_count+1}"
+        generated_n_agence = f"{formatted_n_client}AG{agence_count+1}"
         return generated_n_agence
     
     def save(self, *args, **kwargs):

@@ -1,1 +1,1 @@
-export {CreateEntity} from './CreateEntity';
+export { CreateEntity } from './CreateEntity';

@@ -1,33 +1,18 @@
 // DataGridComponent.js
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Modal } from 'antd';
 import EditTaskForm from './EditTaskForm';
 import TaskGrid from './TaskGrid';
-import API_URL from 'conf';
 
-const DataGridComponent = ({ all }) => {
-  const [tasks, setTasks] = useState([]);
+const DataGridComponent = ({ all, tasks, fetchTask }) => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const fetchTaskData = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/taches/`);
-      setTasks(response.data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération des tâches :', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchTaskData();
-  }, []);
 
   const handleEditClick = (task) => {
     setSelectedTask(task);
     setIsModalOpen(true);
+    console.log('open', task);
   };
 
   const handleCloseModal = () => {
@@ -36,11 +21,12 @@ const DataGridComponent = ({ all }) => {
     console.log('close', selectedTask);
   };
 
-  const onSubmit = () => {
-    fetchTaskData();
+  const onSubmit = (updatedTache) => {
+    //((prevTache) => prevTache.map((t) => (t.id === updatedTache.id ? updatedTache : t)));
+    fetchTask();
     handleCloseModal();
     setSelectedTask(null);
-    console.log('submit', selectedTask);
+    console.log('submit', updatedTache);
   };
 
   return (
@@ -54,7 +40,9 @@ const DataGridComponent = ({ all }) => {
 };
 
 DataGridComponent.propTypes = {
-  all: PropTypes.any
+  all: PropTypes.any,
+  fetchTache: PropTypes.func,
+  tasks: PropTypes.any
 };
 
 export default DataGridComponent;

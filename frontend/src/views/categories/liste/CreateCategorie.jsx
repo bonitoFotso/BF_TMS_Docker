@@ -38,7 +38,7 @@ const CreateCategory = ({ onCategoryCreated, onOk, onCancel }) => {
       setError(null);
 
       const response = await axios.post(`${API_URL}/categories/`, newCategory);
-      onCategoryCreated([response.data]);
+      onCategoryCreated(response.data);
       onOk();
       message.success('Catégorie créée avec succès!');
       resetForm();

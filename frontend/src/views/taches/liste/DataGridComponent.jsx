@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import { Modal, Form, Input, Select, DatePicker, Button } from 'antd';
-
 import API_URL from 'conf';
 
 dayjs.extend(customParseFormat);
@@ -13,24 +12,10 @@ const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
-const DataGridComponent = ({ all }) => {
-  const [tache, setTache] = useState([]);
+const DataGridComponent = ({ all, tache, setTache, updateDataGrid }) => {
   const [selectedTache, setSelectedTache] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = Form.useForm();
-
-  useEffect(() => {
-    const fetchTacheData = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/taches/`);
-        setTache(response.data);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des tâches :', error);
-      }
-    };
-
-    fetchTacheData();
-  }, []);
 
   const handleEditClick = (tache) => {
     setSelectedTache(tache);
@@ -191,16 +176,13 @@ const DataGridComponent = ({ all }) => {
 
 DataGridComponent.propTypes = {
   all: PropTypes.shape({
-    activites: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    appelants: PropTypes.shape({
-      map: PropTypes.func
-    }),
-    categories: PropTypes.shape({
-      map: PropTypes.func
-    })
-  })
+    activites: PropTypes.array,
+    appelants: PropTypes.array,
+    categories: PropTypes.array,
+    techniciens: PropTypes.array // ... (définissez les autres types d'entités)
+  }),
+  setTache: PropTypes.func,
+  tache: PropTypes.any
 };
 
 export default DataGridComponent;

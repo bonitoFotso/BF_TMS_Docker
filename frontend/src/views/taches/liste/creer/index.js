@@ -1,12 +1,14 @@
-// DataGridComponent.js
+// Importez les icônes nécessaires depuis Ant Design
+import { PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
 import TaskForm from './TaskForm';
 
-const CreerTache = ({ all, setAll }) => {
+const CreerTache = ({ all, setAll, onTaskCreated, fetchTache }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleEditClick = () => {
+
+  const handleCreateTaskClick = () => {
     setIsModalOpen(true);
   };
 
@@ -16,15 +18,16 @@ const CreerTache = ({ all, setAll }) => {
 
   const onSubmit = () => {
     handleCloseModal();
+    fetchTache();
   };
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      <Button onClick={handleEditClick} variant="outlined" color="primary">
+    <div>
+      <Button type="primary" icon={<PlusOutlined />} onClick={handleCreateTaskClick} style={{ marginBottom: '16px' }}>
         Créer une tâche
       </Button>
-      <Modal title="Modifier la tâche" open={isModalOpen} onCancel={handleCloseModal} footer={null} width={500}>
-        {<TaskForm onSubmit={onSubmit} onCancel={handleCloseModal} all={all} setAll={setAll} />}
+      <Modal title="Créer une nouvelle tâche" visible={isModalOpen} onCancel={handleCloseModal} footer={null} width={500} zIndex={1149}>
+        <TaskForm onSubmit={onSubmit} onCancel={handleCloseModal} all={all} setAll={setAll} onTaskCreated={onTaskCreated} />
       </Modal>
     </div>
   );
@@ -32,6 +35,8 @@ const CreerTache = ({ all, setAll }) => {
 
 CreerTache.propTypes = {
   all: PropTypes.any,
+  fetchTache: PropTypes.func,
+  onTaskCreated: PropTypes.any,
   setAll: PropTypes.any
 };
 
