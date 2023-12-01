@@ -49,13 +49,13 @@ class AppelantDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ClientListCreateView(generics.ListCreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
 
 class ClientDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 
 
 
