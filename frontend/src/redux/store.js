@@ -3,8 +3,8 @@ import { createStore, combineReducers } from 'redux';
 import authReducer from './authReducer';
 
 const rootReducer = combineReducers({
-  auth: authReducer
-  // ... d'autres réducteurs
+   auth: authReducer
+   // ... d'autres réducteurs
 });
 
 const store = createStore(rootReducer);

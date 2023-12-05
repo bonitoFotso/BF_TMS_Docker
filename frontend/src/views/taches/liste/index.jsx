@@ -7,50 +7,50 @@ import { Card } from '@mui/material';
 import CreerTache from './creer';
 
 const TacheList = () => {
-  const [all, setAll] = useState({ activites: [], appelants: [], categories: [], techniciens: [] });
-  const [loading, setLoading] = useState(true);
-  const [tache, setTache] = useState([]);
-  const [error, setError] = useState(null);
+   const [all, setAll] = useState({ activites: [], appelants: [], categories: [], techniciens: [] });
+   const [loading, setLoading] = useState(true);
+   const [tache, setTache] = useState([]);
+   const [error, setError] = useState(null);
 
-  const fetchTache = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/taches/`);
-      setTache(response.data);
-    } catch (error) {
-      console.error('Erreur lors de la récupération des tâches :', error);
-    }
-  };
-
-  useEffect(() => {
-    const fetchTacheData = async () => {
+   const fetchTache = async () => {
       try {
-        const response = await axios.get(`${API_URL}/all/`);
-        setAll(response.data);
-        setLoading(false);
+         const response = await axios.get(`${API_URL}/taches/`);
+         setTache(response.data);
       } catch (error) {
-        console.error('Erreur lors de la récupération des données :', error);
-        setError(error);
-        setLoading(false);
+         console.error('Erreur lors de la récupération des tâches :', error);
       }
-    };
+   };
 
-    fetchTacheData();
-    fetchTache();
-  }, []);
+   useEffect(() => {
+      const fetchTacheData = async () => {
+         try {
+            const response = await axios.get(`${API_URL}/all/`);
+            setAll(response.data);
+            setLoading(false);
+         } catch (error) {
+            console.error('Erreur lors de la récupération des données :', error);
+            setError(error);
+            setLoading(false);
+         }
+      };
 
-  const onTaskCreated = (newTask) => {
-    console.log('Nouvelle tâche créée:', newTask);
-    setTache((prevTache) => [...prevTache, newTask]);
-  };
+      fetchTacheData();
+      fetchTache();
+   }, []);
 
-  return (
-    <Card>
-      <h2>Liste des Tâches</h2>
-      <CreerTache all={all} setAll={setAll} onTaskCreated={onTaskCreated} />
-      <LoadingErrorComponent loading={loading} error={error} />
-      <DataGridComponent all={all} tasks={tache} setTask={setTache} fetchTask={fetchTache} />
-    </Card>
-  );
+   const onTaskCreated = (newTask) => {
+      console.log('Nouvelle tâche créée:', newTask);
+      setTache((prevTache) => [...prevTache, newTask]);
+   };
+
+   return (
+      <Card>
+         <h2>Liste des Tâches</h2>
+         <CreerTache all={all} setAll={setAll} onTaskCreated={onTaskCreated} initialData={null} />
+         <LoadingErrorComponent loading={loading} error={error} />
+         <DataGridComponent all={all} tasks={tache} setTask={setTache} fetchTask={fetchTache} />
+      </Card>
+   );
 };
 
 export default TacheList;

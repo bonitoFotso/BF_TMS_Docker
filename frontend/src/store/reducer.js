@@ -9,15 +9,15 @@ import accountReducer from './accountReducer';
 //-----------------------|| COMBINE REDUCER ||-----------------------//
 
 const reducer = combineReducers({
-  account: persistReducer(
-    {
-      key: 'account',
-      storage,
-      keyPrefix: ''
-    },
-    accountReducer
-  ),
-  customization: customizationReducer
+   account: persistReducer(
+      {
+         key: 'account',
+         storage,
+         keyPrefix: ''
+      },
+      accountReducer
+   ),
+   customization: customizationReducer
 });
 
 export default reducer;

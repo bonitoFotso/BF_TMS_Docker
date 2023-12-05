@@ -40,7 +40,7 @@
       }
     }
   ],
-  "plugins": ["prettier", "react", "react-hooks"],
+  "plugins": ["react", "react-hooks"],
   "rules": {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
@@ -73,18 +73,6 @@
       "error",
       {
         "ignoreRestSiblings": false
-      }
-    ],
-    "prettier/prettier": [
-      "warn",
-      {
-        "bracketSpacing": true,
-        "printWidth": 140,
-        "singleQuote": true,
-        "trailingComma": "none",
-        "tabWidth": 2,
-        "useTabs": false,
-        "endOfLine": "auto"
       }
     ]
   }

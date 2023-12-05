@@ -31,41 +31,41 @@ const Profile = Loadable(lazy(() => import('views/profile')));
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 
 const MainRoutes = () => {
-  return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <AuthGuard>
-            <MainLayout />
-          </AuthGuard>
-        }
-      >
-        <Route index element={<DashboardDefault />} />
-        <Route path="agence-list" element={<AgenceListCreate />} />
-        <Route path="agence/:id" element={<AgenceDetail />} />
-        <Route path="technicien-list" element={<TechnicienListCreate />} />
-        <Route path="technicien/:id" element={<TechnicienDetail />} />
-        <Route path="appelant-list" element={<AppelantListCreate />} />
-        <Route path="appelant/:id" element={<AppelantDetail />} />
-        <Route path="client-list" element={<ClientListCreate />} />
-        <Route path="client/:id" element={<ClientDetail />} />
-        <Route path="tache-list" element={<TacheList />} />
-        <Route path="tache/:id" element={<TacheDetails />} />
-        <Route path="activite-list" element={<ActiviteListCreate />} />
-        <Route path="activite/:id" element={<ActiviteDetailView />} />
-        <Route path="categorie-list" element={<CategorieListCreate />} />
-        <Route path="categorie/:id" element={<CategorieDetailView />} />
-        <Route path="utils/util-typography" element={<UtilsTypography />} />
-        <Route path="utils/util-color" element={<UtilsColor />} />
-        <Route path="utils/util-shadow" element={<UtilsShadow />} />
-        <Route path="icons/tabler-icons" element={<UtilsTablerIcons />} />
-        <Route path="icons/material-icons" element={<UtilsMaterialIcons />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="sample-page" element={<SamplePage />} />
-      </Route>
-    </Routes>
-  );
+   return (
+      <Routes>
+         <Route
+            path="/"
+            element={
+               <AuthGuard>
+                  <MainLayout />
+               </AuthGuard>
+            }
+         >
+            <Route index element={<DashboardDefault />} />
+            <Route path="agence-list" element={<AgenceListCreate />} />
+            <Route path="agence/:id" element={<AgenceDetail />} />
+            <Route path="technicien-list" element={<TechnicienListCreate />} />
+            <Route path="technicien/:id" element={<TechnicienDetail />} />
+            <Route path="appelant-list" element={<AppelantListCreate />} />
+            <Route path="appelant/:id" element={<AppelantDetail />} />
+            <Route path="client-list" element={<ClientListCreate />} />
+            <Route path="client/:id" element={<ClientDetail />} />
+            <Route path="tache-list" element={<TacheList />} />
+            <Route path="tache/:id" element={<TacheDetails />} />
+            <Route path="activite-list" element={<ActiviteListCreate />} />
+            <Route path="activite/:id" element={<ActiviteDetailView />} />
+            <Route path="categorie-list" element={<CategorieListCreate />} />
+            <Route path="categorie/:id" element={<CategorieDetailView />} />
+            <Route path="utils/util-typography" element={<UtilsTypography />} />
+            <Route path="utils/util-color" element={<UtilsColor />} />
+            <Route path="utils/util-shadow" element={<UtilsShadow />} />
+            <Route path="icons/tabler-icons" element={<UtilsTablerIcons />} />
+            <Route path="icons/material-icons" element={<UtilsMaterialIcons />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="sample-page" element={<SamplePage />} />
+         </Route>
+      </Routes>
+   );
 };
 
 export default MainRoutes;

@@ -6,15 +6,15 @@ import AuthenticationRoutes from './AuthenticationRoutes';
 // ==============================|| ROUTING RENDER ||============================== //
 
 const Routes = () => {
-  return (
-    <>
-      {/* Routes for authentication pages */}
-      <AuthenticationRoutes />
+   return (
+      <>
+         {/* Routes for authentication pages */}
+         <AuthenticationRoutes />
 
-      {/* Routes for main layouts */}
-      <MainRoutes />
-    </>
-  );
+         {/* Routes for main layouts */}
+         <MainRoutes />
+      </>
+   );
 };
 
 export default Routes;
