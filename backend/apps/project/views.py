@@ -1,6 +1,8 @@
 # views.py
 
 from rest_framework import generics
+from rest_framework import filters
+
 from .models import Tache, Technicien, TechnicienTache, Rapport, Categorie, Activite
 from .serializers import (
     TacheSerializer, TechnicienTacheSerializer, 
@@ -87,3 +89,51 @@ class TacheListByPrioriteView(generics.ListAPIView):
     def get_queryset(self):
         priorite = self.kwargs.get('priorite')  # Supposons que la priorité soit passée en tant que paramètre d'URL
         return Tache.objects.filter(priorite=priorite)
+    
+
+class TacheAssociationListView(generics.ListAPIView):
+    serializer_class = TacheSerializer
+
+    def get_queryset(self):
+        association_id = self.kwargs.get('association_id')
+        return Tache.objects.filter(assignations__id=association_id)
+
+class TacheAppelantListView(generics.ListAPIView):
+    serializer_class = TacheSerializer
+
+    def get_queryset(self):
+        appelant_id = self.kwargs.get('appelant_id')
+        return Tache.objects.filter(appelant__id=appelant_id)
+
+class TacheOkListView(generics.ListAPIView):
+    serializer_class = TacheSerializer
+
+    def get_queryset(self):
+        return Tache.objects.filter(ok=True)
+
+class TacheDateCreationListView(generics.ListAPIView):
+    serializer_class = TacheSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['createdAt']
+
+    def get_queryset(self):
+        created_at = self.kwargs.get('created_at')
+        return Tache.objects.filter(createdAt=created_at)
+
+class TacheDateFinListView(generics.ListAPIView):
+    serializer_class = TacheSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['date_fin']
+
+    def get_queryset(self):
+        date_fin = self.kwargs.get('date_fin')
+        return Tache.objects.filter(date_fin=date_fin)
+
+class TacheDateModificationListView(generics.ListAPIView):
+    serializer_class = TacheSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['updatedAt']
+
+    def get_queryset(self):
+        updated_at = self.kwargs.get('updated_at')
+        return Tache.objects.filter(updatedAt=updated_at)
