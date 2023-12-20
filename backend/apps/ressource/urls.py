@@ -1,18 +1,14 @@
-from django.urls import path, re_path
-from .views import *
+# urls.py (dans votre application Django)
+
+from django.urls import path
+from .views import (TechnicienListCreateView, TechnicienRetrieveUpdateDestroyView,
+                     TechnicienTachesList, TechnicienList)
 
 urlpatterns = [
-    path("technicien-create", TechnicienCreateView.as_view(), name="technicien-create"),
-    path("technicien-list", TechnicienListView.as_view(), name="technicien-list"),
-    path('technicien/<int:pk>/detail',TechnicienDetailView.as_view(),name='technicien-detail'),
-    path('accounts/', AccountView.as_view(), name='account'),
-    
-    path('compute/', compute, name="compute"),
-    path('c', Comp.as_view(), name='c'),
-    
+    path('techniciens/', TechnicienListCreateView.as_view(), name='technicien-list-create'),
+    path('techniciens/<int:pk>/', TechnicienRetrieveUpdateDestroyView.as_view(), name='technicien-retrieve-update-destroy'),
+    # Ajoutez d'autres patterns d'URL pour les vues supplémentaires
+    path('technicien/<int:id>/taches/', TechnicienTachesList.as_view(), name='technicien-taches-list'),
+    path('techniciens-list/', TechnicienList.as_view(), name='technicien-list'),
 
-    
-    
 ]
-
-

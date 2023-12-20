@@ -8,7 +8,7 @@ const TaskGrid = ({ tasks, handleEditClick }) => {
    const renderActivite = (params) => (
       <span>
          {params.row.activite.map((act) => (
-            <div key={act.id}>{act.nom}</div>
+            <div key={act.id}>{act.name}</div>
          ))}
       </span>
    );
@@ -16,17 +16,17 @@ const TaskGrid = ({ tasks, handleEditClick }) => {
    const renderCategorie = (params) => (
       <span>
          {params.row.categorie.map((cat) => (
-            <div key={cat.id}>{cat.nom}</div>
+            <div key={cat.id}>{cat.name}</div>
          ))}
       </span>
    );
 
    const renderAppelant = (params) => <span>{params.row.appelant.name}</span>;
-   const rendertechnicien = (params) => <span>{params.row.assignations.map((tec) => tec.nom).join(', ')}</span>;
+   const rendertechnicien = (params) => <span>{params.row.assignations.map((tec) => tec.name).join(', ')}</span>;
 
    const columns = [
       { field: 'id', headerName: 'ID', flex: 1 },
-      { field: 'nom', headerName: 'Nom', flex: 4 },
+      { field: 'name', headerName: 'name', flex: 4 },
       { field: 'status', headerName: 'Statut', flex: 2 },
       { field: 'priorite', headerName: 'Priorité', flex: 2 },
       {

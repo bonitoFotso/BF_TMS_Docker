@@ -26,7 +26,7 @@ const CreerTache = ({ all, setAll, onTaskCreated, fetchTache }) => {
          <Button type="primary" icon={<PlusOutlined />} onClick={handleCreateTaskClick} style={{ marginBottom: '16px' }}>
             Créer une tâche
          </Button>
-         <Modal title="Créer une nouvelle tâche" visible={isModalOpen} onCancel={handleCloseModal} footer={null} width={500} zIndex={1149}>
+         <Modal title="Créer une nouvelle tâche" open={isModalOpen} onCancel={handleCloseModal} footer={null} width={500} zIndex={1149}>
             <TaskForm
                onSubmit={onSubmit}
                onCancel={handleCloseModal}

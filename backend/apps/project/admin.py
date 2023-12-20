@@ -4,16 +4,16 @@ from .models import *
 
 # Administration pour le modèle Categorie
 class CategorieAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'description', 'createdAt', 'updatedAt')
+    list_display = ('name', 'description', 'createdAt', 'updatedAt')
     list_filter = ('createdAt', 'updatedAt')
-    search_fields = ('nom', 'description')
+    search_fields = ('name', 'description')
     list_per_page = 10
 
 # Administration pour le modèle Activite
 class ActiviteAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'description', 'createdAt', 'updatedAt')
+    list_display = ('name', 'description', 'createdAt', 'updatedAt')
     list_filter = ('createdAt', 'updatedAt')
-    search_fields = ('nom', 'description', 'projet__nom')
+    search_fields = ('name', 'description', 'projet__name')
     list_per_page = 10
 
 admin.site.register(Categorie, CategorieAdmin)
@@ -24,9 +24,9 @@ class TechnicienTacheInline(admin.TabularInline):
 
 class TacheAdmin(admin.ModelAdmin):
     #form = TacheForm
-    list_display = ('nom', 'status', 'priorite', 'date_debut', 'date_fin', 'is_overdue')
+    list_display = ('name', 'status', 'priorite', 'date_debut', 'date_fin', 'is_overdue')
     list_filter = ('status', 'priorite', 'date_debut', 'date_fin')
-    search_fields = ('nom', 'description', 'n_OS')
+    search_fields = ('name', 'description', 'n_OS')
     inlines = [TechnicienTacheInline]
     date_hierarchy = 'date_debut'
     actions = ['marquer_effectue']
@@ -41,7 +41,7 @@ admin.site.register(Tache, TacheAdmin)
 class TechnicienTacheAdmin(admin.ModelAdmin):
     list_display = ('technicien', 'tache', 'ok', 'date_debut', 'date_fin')
     list_filter = ('technicien', 'tache', 'ok')
-    search_fields = ('technicien__nom', 'tache__nom')
+    search_fields = ('technicien__name', 'tache__name')
     date_hierarchy = 'date_debut'
     ordering = ('-date_debut',)
     
@@ -50,7 +50,7 @@ class TechnicienTacheAdmin(admin.ModelAdmin):
 class RapportAdmin(admin.ModelAdmin):
     list_display = ('tache', 'date_creation')
     list_filter = ('date_creation',)
-    search_fields = ('tache__nom', 'rapport_text')
+    search_fields = ('tache__name', 'rapport_text')
     date_hierarchy = 'date_creation'
     ordering = ('-date_creation',)
 

@@ -12,20 +12,25 @@ class TechnicienTacheSerialiser(serializers.ModelSerializer):
         fields = ('technicien',)
 
 class ClientSerializer(serializers.ModelSerializer):
+    agences_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Client
-        fields = '__all__'  # Incluez tous les champs du modèle dans la sérialisation
+        fields = '__all__'
+
+    def get_agences_count(self, obj):
+        return obj.agence_set.count() 
         
 
 class ActiviteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Activite
-        fields = ('id', 'nom', 'description')
+        fields = ('id', 'name', 'description')
 
 class CategorieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Categorie
-        fields = ('id', 'nom', 'description')
+        fields = ('id', 'name', 'description')
 
 class AgenceSerializer(serializers.ModelSerializer):
     siege = ClientSerializer()
@@ -33,6 +38,9 @@ class AgenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agence
         fields = '__all__'
+
+    def get_appelants_count(self, obj):
+        return obj.appelant_set.count()
 
 
 class AppelantSerializer(serializers.ModelSerializer):
@@ -104,7 +112,7 @@ class TSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         # Mettez à jour les champs de base de la tâche
-        instance.nom = validated_data.get('nom', instance.nom)
+        instance.name = validated_data.get('name', instance.name)
         instance.status = validated_data.get('status', instance.status)
         instance.appelant = validated_data.get('appelant', instance.appelant)
         instance.priorite = validated_data.get('priorite', instance.priorite)

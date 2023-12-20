@@ -1,30 +1,31 @@
-from django.contrib import admin
+# urls.py (dans votre application Django)
+
 from django.urls import path
-from .views import *
-from django.contrib.auth.views import LogoutView
+from .views import (
+    TacheListCreateView, TacheRetrieveUpdateDestroyView,
+    TechnicienTacheListCreateView, TechnicienTacheRetrieveUpdateDestroyView,
+    RapportListCreateView, RapportRetrieveUpdateDestroyView,
+    CategorieListCreateView, CategorieDetailView, 
+    ActiviteListCreateView, ActiviteDetailView,
+    TacheListByCategorieView, TacheListByActiviteView,
+    TacheListByStatusView, TacheListByPrioriteView
+)
 
 urlpatterns = [
+    path('taches/', TacheListCreateView.as_view(), name='tache-list-create'),
+    path('taches/<int:pk>/', TacheRetrieveUpdateDestroyView.as_view(), name='tache-retrieve-update-destroy'),
+    path('technicien-taches/', TechnicienTacheListCreateView.as_view(), name='technicien-tache-list-create'),
+    path('technicien-taches/<int:pk>/', TechnicienTacheRetrieveUpdateDestroyView.as_view(), name='technicien-tache-retrieve-update-destroy'),
+    path('rapports/', RapportListCreateView.as_view(), name='rapport-list-create'),
+    path('rapports/<int:pk>/', RapportRetrieveUpdateDestroyView.as_view(), name='rapport-retrieve-update-destroy'),
+    # Ajoutez d'autres patterns d'URL pour les vues supplémentaires
+    path('categories/', CategorieListCreateView.as_view(), name='categorie-list-create'),
+    path('categories/<int:pk>/', CategorieDetailView.as_view(), name='categorie-detail'),
+    path('activites/', ActiviteListCreateView.as_view(), name='activite-list-create'),
+    path('activites/<int:pk>/', ActiviteDetailView.as_view(), name='activite-detail'),
+    path('taches/by_categorie/<int:categorie_id>/', TacheListByCategorieView.as_view(), name='tache-list-by-categorie'),
+    path('taches/by_activite/<int:activite_id>/', TacheListByActiviteView.as_view(), name='tache-list-by-activite'),
+    path('taches/by_status/<str:status>/', TacheListByStatusView.as_view(), name='tache-list-by-status'),
+    path('taches/by_priorite/<str:priorite>/', TacheListByPrioriteView.as_view(), name='tache-list-by-priorite'),
     
-
-    #path('dashboard',Dashboard.as_view(),name='dashboard'),
-    #path('project-detail/<int:pk>/',ProjectDetail.as_view(),name='projectdetail'),
-    #path('project-update/<int:pk>/',ProjectUpdate.as_view(),name='projectupdate'),
-    #path('project-delete/<int:pk>/',ProjectDelete.as_view(),name='projectdelete'),
-
-    path('task-list',TacheListView.as_view(),name='task-list'),
-    path('task-create',TaskCreate.as_view(),name='task'),
-    path('tasks/<int:pk>/edit',TaskUpdateView.as_view(),name='taskupdate'),
-    path('tasks/<int:pk>/delete',TaskDelete.as_view(),name='taskdelete'),
-    path('tasks/<int:pk>/detail',TaskDetail.as_view(),name='taskdetail'),
-    
-    #path('ajax_datatable/permissions/', PermissionAjaxDatatableView.as_view(), name="ajax_datatable_permissions"),
-    path('t',t, name='tt'),
-    path('att',att, name='att'),
-    path('edit_task',edit_task, name='edit_task'),
-        
-    path('create_task/', CreateTaskView.as_view(), name='create_task'),
-    path('create_appelant/',create_appelant, name='create_appelant'),
-    path('tec_ajax/', tec_ajax, name='tec_ajax'),
-    path('get_task_info/', get_task_info, name='get_task_info'),
-
 ]

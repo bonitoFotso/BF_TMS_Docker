@@ -7,7 +7,7 @@ from account.models import User
 class Technicien(models.Model):
     user = models.OneToOneField(User, verbose_name=_("User"), on_delete=models.CASCADE,null=True)
     photo = models.ImageField(_("profile"), upload_to='profile', )
-    nom  = models.CharField(_("nom"), max_length=50)
+    name  = models.CharField(_("name"), max_length=50)
     prenom = models.CharField(_("prenom"), max_length=50)
     tel = models.CharField(_("telephone"),max_length=20)
     email = models.EmailField(max_length=254)
@@ -18,7 +18,7 @@ class Technicien(models.Model):
     efficacite = models.FloatField(_("Efficacité"), default=0.0)
     
     def __str__(self):
-        return self.nom
+        return self.name
     
     
     class Meta:

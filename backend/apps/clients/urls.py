@@ -1,17 +1,18 @@
+# urls.py (dans votre application Django)
+
 from django.urls import path
-from .views import *
+from .views import (
+    ClientListCreateView, ClientRetrieveUpdateDestroyView,
+    AgenceListCreateView, AgenceRetrieveUpdateDestroyView,
+    AppelantListCreateView, AppelantRetrieveUpdateDestroyView
+)
 
 urlpatterns = [
-    path('clients/', ClientView.as_view(), name='clients'),
-
-    path('client-list/', ClientListView.as_view(), name='client-list'),
-    path('client-create/', ClientCreateView.as_view(), name='client-create'),
-    path('agence-list/', AgenceListView.as_view(), name='agence-list'),
-    path('agence-create/', AgenceCreateView.as_view(), name='agence-create'),
-    path('appelant-list/', AppelantListView.as_view(), name='appelant-list'),
-    path('appelant-create/', AppelantCreateView.as_view(), name='appelant-create'),
-    
-    
-    path('get_client_data/', get_client_data, name='get_client_data'),
-
+    path('clients/', ClientListCreateView.as_view(), name='client-list-create'),
+    path('clients/<int:pk>/', ClientRetrieveUpdateDestroyView.as_view(), name='client-retrieve-update-destroy'),
+    path('agences/', AgenceListCreateView.as_view(), name='agence-list-create'),
+    path('agences/<int:pk>/', AgenceRetrieveUpdateDestroyView.as_view(), name='agence-retrieve-update-destroy'),
+    path('appelants/', AppelantListCreateView.as_view(), name='appelant-list-create'),
+    path('appelants/<int:pk>/', AppelantRetrieveUpdateDestroyView.as_view(), name='appelant-retrieve-update-destroy'),
+    # Ajoutez d'autres patterns d'URL pour les vues supplémentaires
 ]

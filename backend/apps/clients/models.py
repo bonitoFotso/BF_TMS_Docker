@@ -92,6 +92,8 @@ class Agence(models.Model):
 class Appelant(models.Model):
     name = models.CharField(_("appelant"), max_length=150)
     agence = models.ForeignKey("Agence", verbose_name=_("agence"), on_delete=models.CASCADE)
+    phone = models.CharField(_("phone"), max_length=20, default="699913839")
+    email = models.EmailField(_("email"), max_length=254, default= "email@email.com")
     addAt = models.DateField(_("ajouter le"), auto_now=False, auto_now_add=True)
     updAt = models.DateField(_("mise a jour le"), auto_now=True, auto_now_add=False)
 
@@ -101,5 +103,5 @@ class Appelant(models.Model):
     @receiver(post_save, sender=Agence)
     def create_appelant(sender, instance, created, **kwargs):
         if created:
-            Appelant.objects.create(name = instance.responsable,agence = instance)
+            Appelant.objects.create(name = instance.responsable,agence = instance,phone = instance.phone)
 

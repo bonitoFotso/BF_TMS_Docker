@@ -63,7 +63,7 @@ class AllView(generics.ListAPIView):
 class TacheListCreateView(generics.ListCreateAPIView):
     queryset = Tache.objects.all()
     serializer_class = TacheSerializer
-    search_fields = ['nom', 'status', 'appelant__name', 'agence__name', 'agence__siege__name', 'agence__siege__n_client']
+    search_fields = ['name', 'status', 'appelant__name', 'agence__name', 'agence__siege__name', 'agence__siege__n_client']
     ordering_fields = ['date_debut', 'date_fin', 'createdAt', 'updatedAt']
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
